@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.colleges.college import College
 
@@ -46,7 +46,7 @@ def get_college_by_id(college_id):
             return jsonify(college.to_json())
 
 
-@bp.route('/new', methods=['POST'])
+@bp.route('/new', methods=['GET', 'POST'])
 def create_new_college():
     """
     Create a college
@@ -75,6 +75,7 @@ def create_new_college():
             except:
                 return jsonify(msg='Error saving College to database'), 500
             return jsonify(new_college.to_json()), 201
+        return render_template('colleges/add_college.html')
 
 
 @bp.route('/update/<int:college_id>', methods=['PUT'])
