@@ -5,7 +5,7 @@ from flask import (
 
 from flask_jwt_extended import (
     create_access_token, create_refresh_token, get_jwt_identity, get_jwt, jwt_required, current_user)
-from middleware.security import jwt
+from src.middleware.security import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from src.pdhs_app import db
