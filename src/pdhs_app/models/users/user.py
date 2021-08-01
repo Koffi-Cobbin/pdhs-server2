@@ -1,4 +1,4 @@
-from database.db import db
+from src.database.db import db
 from src.pdhs_app.common.utils import Utils
 import src.pdhs_app.models.users.errors as UserErrors
 
