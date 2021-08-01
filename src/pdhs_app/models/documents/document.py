@@ -14,7 +14,7 @@ class Document(db.Model):
         'user.id'), nullable=False)
     file = db.Column(db.String(255), nullable=False)
     progress = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String, nullable=True)
+    description = db.Column(db.String(255), nullable=True)
     approvals = db.relationship('Approval', backref='document', lazy='joined')
 
     def __repr__(self):
