@@ -5,12 +5,6 @@ from src.pdhs_app.models.colleges.college import College
 bp = Blueprint('colleges', __name__, url_prefix='/colleges')
 
 
-@bp.route('/hello', methods=['GET'])
-def hello():
-    if request.method == 'GET':
-        return "Hello from /college"
-
-
 @bp.route('/', methods=['GET'])
 def get_all_colleges():
     """
@@ -52,8 +46,8 @@ def get_college_by_id(college_id):
             return jsonify(college.to_json())
 
 
-@bp.route('/create', methods=['POST'])
-def create_college():
+@bp.route('/new', methods=['POST'])
+def create_new_college():
     """
     Create a college
     """
