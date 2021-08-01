@@ -32,7 +32,7 @@ def get_user_by_email(email):
 
 
 @bp.route('delete/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
+def delete(user_id):
     if request.method == 'DELETE':
         user = User.find_by_id(user_id)
     if user is not None:
