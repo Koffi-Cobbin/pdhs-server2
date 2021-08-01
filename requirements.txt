@@ -27,5 +27,6 @@ six==1.16.0
 SQLAlchemy==1.4.20
 toml==0.10.2
 typing-extensions==3.10.0.0
+uwsgi
 Werkzeug==2.0.1
 zipp==3.5.0
