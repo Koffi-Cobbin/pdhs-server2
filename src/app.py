@@ -57,15 +57,15 @@ def hello():
     return "Hello from root of app /"
 
 # Register Blueprints
-app.register_blueprint(auth_bp, url_prefix="/auth")
-app.register_blueprint(user_bp, url_prefix="/users")
-app.register_blueprint(document_bp, url_prefix="/documents")
-app.register_blueprint(department_bp, url_prefix="/deparments")
-app.register_blueprint(comment_bp, url_prefix="/comments")
-app.register_blueprint(college_bp, url_prefix="/colleges")
-app.register_blueprint(faculty_bp, url_prefix="/faculties")
-app.register_blueprint(portfolio_bp, url_prefix="/portfolios")
-app.register_blueprint(approval_bp, url_prefix="/approvals")
+app.register_blueprint(auth_bp)
+app.register_blueprint(user_bp)
+app.register_blueprint(document_bp)
+app.register_blueprint(department_bp)
+app.register_blueprint(comment_bp)
+app.register_blueprint(college_bp)
+app.register_blueprint(faculty_bp)
+app.register_blueprint(portfolio_bp)
+app.register_blueprint(approval_bp)
 
 with app.app_context():
     # Reset Database
