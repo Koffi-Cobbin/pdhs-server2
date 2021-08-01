@@ -8,8 +8,8 @@ from flask_jwt_extended import (
 from middleware.security import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from pdhs_app import db
-from pdhs_app.models.users.user import User
+from src.pdhs_app import db
+from src.pdhs_app.models.users.user import User
 from .tokens import TokenBlocklist
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
