@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from pdhs_app.models.users.user import User  # src.
-from pdhs_app.models.faculties.faculty import Faculty
+from src.pdhs_app.models.users.user import User  # src.
+from src.pdhs_app.models.faculties.faculty import Faculty
 
 bp = Blueprint('facultys', __name__, url_prefix='/faculty')
 
