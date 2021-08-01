@@ -1,12 +1,12 @@
 """Development configuration."""
 
 from os import environ
-from dotenv import load_dotenv
 from datetime import timedelta
 
+# from dotenv import load_dotenv
 # basedir = path.abspath(path.dirname(__file__))
 # load_dotenv(path.join(basedir, '.env'))
-load_dotenv()
+# load_dotenv()
 
 # defaults
 SECRET_KEY = environ.get('SECRET_KEY')
