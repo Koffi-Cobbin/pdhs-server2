@@ -1,4 +1,4 @@
-from src.pdhs_app import create_app
+from src.pdhs_app.app import create_app
 
 app = create_app(env='development')
 
