@@ -1,4 +1,4 @@
-from pdhs_app import db
+from src.database.db import db
 
 
 class Comment(db.Model):
