@@ -54,7 +54,7 @@ migrate.init_app(app, db, render_as_batch=True)
 
 @app.route('/')
 def hello():
-    return "Hello from root of app /"
+    return "Hello from root of app"
 
 # Register Blueprints
 app.register_blueprint(auth_bp)
