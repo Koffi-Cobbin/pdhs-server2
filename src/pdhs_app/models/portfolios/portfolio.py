@@ -1,4 +1,4 @@
-from database.db import db
+from src.database.db import db
 
 
 class Portfolio(db.Model):
