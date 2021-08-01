@@ -1,6 +1,6 @@
 from database.db import db
-from pdhs_app.common.utils import Utils
-import pdhs_app.models.users.errors as UserErrors
+from src.pdhs_app.common.utils import Utils
+import src.pdhs_app.models.users.errors as UserErrors
 
 
 class User(db.Model):
