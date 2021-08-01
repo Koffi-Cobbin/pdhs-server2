@@ -8,7 +8,7 @@ from flask_jwt_extended import (
 from src.middleware.security import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from src.pdhs_app import db
+from src.database import db
 from src.pdhs_app.models.users.user import User
 from .tokens import TokenBlocklist
 
