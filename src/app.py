@@ -29,8 +29,8 @@ def create_app(*args, **kwargs):
 
 # create and configure the app
 app = Flask(__name__, instance_relative_config=True)
-
-app.config['ENV'] = create_app(env='development')
+env = create_app(env='development')
+app.config['ENV'] = env
 app.config.from_object('src.config.%s' % env)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
