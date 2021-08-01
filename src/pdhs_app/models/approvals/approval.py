@@ -3,7 +3,7 @@ from src.pdhs_app.models.approvals import errors as ApprovalErrors
 
 class Approval(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable=False)
+    document_id = db.Column(db.String(50), db.ForeignKey('document.id'), nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     status = db.Column(db.Boolean)
 
