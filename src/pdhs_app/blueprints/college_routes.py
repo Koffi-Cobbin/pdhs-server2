@@ -54,7 +54,7 @@ def create_new_college():
     if request.method == 'POST':
         id = request.form['id'] if request.form['id'] else request.json.get('id', None) 
         name = request.form['name'] if request.form['name'] else request.json.get('name', None)
-        provost_id = request.form['provost_id'] if request.form['provost_id'] else None #request.json.get('provost_id', None)
+        provost_id = None # #request.form['provost_id'] if request.form['provost_id'] else request.json.get('provost_id', None)
         error_msg = None
         if not id:
             error_msg = 'Id is required.'
