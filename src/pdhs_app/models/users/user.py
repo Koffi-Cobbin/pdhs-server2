@@ -9,18 +9,16 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    portfolio_id = db.Column(db.Integer, db.ForeignKey(
-        'portfolio.id'), nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey(
-        'department.id'), nullable=False)
-    documents = db.relationship(
-        "Document", lazy='select', backref=db.backref('user', lazy='joined'))
-    comments = db.relationship(
-        "Comment", lazy='select', backref=db.backref('user', lazy='joined'))
-    approvals = db.relationship(
-        "Approval", lazy='select', backref=db.backref('recipient', lazy='joined'))
-    tokens = db.relationship(
-        'TokenBlocklist', lazy='select', backref=db.backref('user', lazy='joined'))
+    portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'), nullable=False)
+    department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=False)
+    
+    college = db.relationship("College", lazy='select', backref=db.backref('user', lazy='joined'))
+    faculty = db.relationship("Faculty", lazy='select', backref=db.backref('user', lazy='joined'))
+    documents = db.relationship("Document", lazy='select', backref=db.backref('user', lazy='joined'))
+    comments = db.relationship("Comment", lazy='select', backref=db.backref('user', lazy='joined'))
+    approvals = db.relationship("Approval", lazy='select', backref=db.backref('recipient', lazy='joined'))
+    tokens = db.relationship('TokenBlocklist', lazy='select', backref=db.backref('user', lazy='joined'))
+    
 
     def __repr__(self):
         return '<User %r>' % self.user_id
