@@ -102,7 +102,7 @@ def register():
         return render_template("users/signup.html")
 
 
-@bp.route('/login', methods=['POST'])
+@bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         id = request.json.get('id', None)
