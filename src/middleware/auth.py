@@ -18,7 +18,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/hello', methods=['GET'])
 def hello():
     if request.method == 'GET':
-        return 'Hello from /auth'
+        return render_template("users/signup.html")
 
 
 @jwt.user_identity_loader
