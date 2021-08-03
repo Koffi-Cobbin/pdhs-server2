@@ -3,13 +3,10 @@ from src.database.db import db
 
 class Faculty(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    college_id = db.Column(
-        db.Integer, db.ForeignKey('college.id', use_alter=True), nullable=False)
-    departments = db.relationship(
-        'Department', lazy='select', backref=db.backref('faculty', lazy='joined'))
-    dean_id = db.Column(db.Integer, db.ForeignKey(
-        'user.id', use_alter=True), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    college_id = db.Column(db.Integer, db.ForeignKey('college.id', use_alter=True), nullable=False)
+    dean_id = db.Column(db.Integer, db.ForeignKey('user.id', use_alter=True), nullable=True)
+    departments = db.relationship('Department', lazy='select', backref=db.backref('faculty', lazy='joined'))
 
     def __repr__(self):
         return '<Faculty %r>' % self.name
