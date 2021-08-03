@@ -52,9 +52,9 @@ def create_new_college():
     Create a college
     """
     if request.method == 'POST':
-        id = request.json.get('id', None) or request['id']
-        name = request.json.get('name', None) or request['name']
-        provost_id = request.json.get('provost_id', None) or request['provost_id']
+        id = request['id'] if request['id'] else request.json.get('id', None) 
+        name = request['name'] if request['name'] else request.json.get('name', None)
+        provost_id = request['provost_id'] if request['provost_id'] else request.json.get('provost_id', None)
         error_msg = None
         if not id:
             error_msg = 'Id is required.'
