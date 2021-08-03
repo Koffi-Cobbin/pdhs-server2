@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.departments.department import Department
 from src.pdhs_app.models.portfolios.portfolio import Portfolio
+from src.pdhs_app.models.colleges.college import College
+from src.pdhs_app.models.faculties.faculty import Faculty
 
 
 bp = Blueprint('department', __name__, url_prefix='/department')
@@ -9,7 +11,14 @@ bp = Blueprint('department', __name__, url_prefix='/department')
 @bp.route('/get/<int:college_id>', methods=['GET'])
 def get_departments(college_id):
     if request.method == 'GET':
-        return "Hello from /department"
+        faculties = Faculty.query.filter_by(college_id=college_id)
+        department_lsts = [Department.query.filter_by(faculty_id=faculty.id) for faculty in faculties]
+        departments = []
+        for i in range(len(department_lsts)-1):
+            for j in range(len(i)-1):
+                departments.append(j)
+        result = [department.to_json() for department in departments]
+        return jsonify(result)
 
 @bp.route('/', methods=['GET'])
 def get_all_departments():
