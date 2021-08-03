@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.departments.department import Department
 from src.pdhs_app.models.portfolios.portfolio import Portfolio
@@ -61,7 +61,7 @@ def get_department_by_id(department_id):
             return jsonify(department.to_json())
 
 
-@bp.route('/create', methods=['POST'])
+@bp.route('/new', methods=['POST', 'GET'])
 def create_department():
     """
     Create a department
@@ -90,6 +90,7 @@ def create_department():
             except:
                 return jsonify(msg='Error saving Department to database'), 500
             return jsonify(new_dept.to_json()), 201
+    return render_template("departments/add_department.html")
 
 
 @bp.route('/update/<int:department_id>', methods=['PUT'])
