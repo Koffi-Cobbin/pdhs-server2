@@ -119,7 +119,7 @@ def login():
         else:
             return jsonify(msg='Invalid ID or password'), 401
     else:
-        return render_template("src/pdhs_app/templates/users/login.html") #404
+        return render_template("users/login.html") #404
 
 
 @bp.route('/logout', methods=["DELETE"])
