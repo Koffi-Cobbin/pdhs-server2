@@ -1,38 +1,23 @@
-from flask import Blueprint, request, jsonify
-from src.pdhs_app.models.users.user import User  # src.
+from flask import Blueprint, request, jsonify, render_template
+from src.pdhs_app.models.users.user import User  
 from src.pdhs_app.models.portfolios.portfolio import Portfolio
 
 bp = Blueprint('portfolios', __name__, url_prefix='/portfolio')
 
 
-@bp.route('/hello', methods=['GET'])
-def hello():
-    if request.method == 'GET':
-        return "Hello from /portfolio"
-
-
 @bp.route('/', methods=['GET'])
-def get_all_portfolios():
-    """
-    Get all the portfolios in the portfolio
-    table.
-    """
-    if request.method == 'GET':
-        portfolios = []
-        result = []
-        error_msg = None
-        try:
-            result = Portfolio.query.all()
-        except:
-            error_msg = 'Error occured retrieving portfolios'
-        if len(result) == 0:
-            error_msg = 'No portfolios available'
-        if error_msg is not None:
-            return jsonify(msg=error_msg), 404
-        else:
-            for portfolio in result:
-                portfolios.append(portfolio.to_json())
-            return jsonify(portfolios=portfolios), 200
+def all():
+    error_msg = None
+    try:
+        portfolios = Portfolio.query.all()
+    except:
+        error_msg = 'Error occured retrieving portfolios'
+    if portfolios is None:
+        error_msg = 'No portfolios available'
+    if error_msg is not None:
+        return jsonify(msg=error_msg), 404
+    result = [portfolio.to_json() for portfolio in portfolios]
+    return jsonify(portfolios=result), 200
 
 
 @bp.route('/<int:portfolio_id>', methods=['GET'])
