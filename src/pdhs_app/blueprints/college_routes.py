@@ -5,7 +5,7 @@ from src.pdhs_app.models.colleges.college import College
 bp = Blueprint('colleges', __name__, url_prefix='/colleges')
 
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/test', methods=['GET', 'POST'])
 def test():
     College(id=1, name="College of Engineering", provost_id=0).save_to_db()
     result = College.query.all()
