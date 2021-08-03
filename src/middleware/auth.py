@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from flask import (
-    Blueprint, request, jsonify
+    Blueprint, request, jsonify, render_template
 )
 
 from flask_jwt_extended import (
@@ -48,7 +48,7 @@ def check_if_token_revoked(jwt_header, jwt_payload):
     return token is not None
 
 
-@bp.route('/register', methods=['POST'])
+@bp.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
         request_data = request.get_json()
@@ -99,6 +99,7 @@ def register():
             except:
                 return jsonify(msg="Could not save new user to database"), 500
             return jsonify({'msg': 'User created successfully'}), 201
+        return render_template('signup.html')
 
 
 @bp.route('/login', methods=['POST'])
