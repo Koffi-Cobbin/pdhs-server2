@@ -8,10 +8,19 @@
 </head>
 <body>
     <form method="POST">
-        <label>Faculty ID: </label>
-        <input type="text" name="id" placeholder="Faculty ID">
-        <label>Name: </label>
-        <input type="text" name="name">
+        <label>Faculty ID: </label><br>
+        <input type="text" name="id" placeholder="Faculty ID"><br><br>
+        <label>Name: </label><br>
+        <input type="text" name="name"><br><br>
+        <label>College: </label><br>
+        <select id="department" name="department">
+          <option value="1">College of Engineering</option>
+          <option value="2">College of Science</option>
+          <option value="3">College of Humanities and Social Sciences</option>
+          <option value="4">College of Art and Built Environment</option>
+          <option value="5">College of Health Sciences</option>
+          <option value="6">College of Agriculture and Natural Resources</option>
+        </select><br><br>
         <button>Submit</button>
     </form>
 </body>
