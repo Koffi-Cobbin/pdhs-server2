@@ -75,7 +75,7 @@ def create_new_college():
             except:
                 return jsonify(msg='Error saving College to database'), 500
             return jsonify(new_college.to_json()), 201
-        return render_template('colleges/add_college.html')
+    return render_template("colleges/add_college.html")
 
 
 @bp.route('/update/<int:college_id>', methods=['PUT'])
