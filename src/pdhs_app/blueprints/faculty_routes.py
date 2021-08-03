@@ -38,5 +38,5 @@ def create_new_faculty():
                 new_faculty.save_to_db() # = College(id=int(_id), name=name, provost_id=provost_id).
             except:
                 return jsonify(msg='Error saving Faculty to database'), 500
-            return jsonify(new_college.to_json()), 201 
+            return jsonify(new_faculty.to_json()), 201 
     return render_template("faculties/add_faculty.html")
