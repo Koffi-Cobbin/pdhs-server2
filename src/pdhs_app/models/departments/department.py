@@ -4,11 +4,9 @@ from src.database.db import db
 class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    faculty_id = db.Column(db.Integer, db.ForeignKey(
-        'faculty.id'), nullable=False)
-    # head = db.Column(db.Integer, db.ForeignKey('user.user_id', use_alter=True), nullable=False)
-    users = db.relationship("User", lazy='select',
-                            backref=db.backref('department', lazy='joined'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=False)
+    head = db.Column(db.Integer, db.ForeignKey('user.user_id', use_alter=True), nullable=True)
+    users = db.relationship("User", lazy='select', backref=db.backref('department', lazy='joined'))
 
     def __repr__(self):
         return '<Department %r>' % self.name
