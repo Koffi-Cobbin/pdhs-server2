@@ -68,7 +68,7 @@ def create_new_college():
         elif not name:
             error_msg = 'Name is required.'
         elif not provost_id:
-            provost_id = 0
+            provost_id = None
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
