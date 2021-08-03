@@ -99,7 +99,7 @@ def register():
             except:
                 return jsonify(msg="Could not save new user to database"), 500
             return jsonify({'msg': 'User created successfully'}), 201
-        return render_template("users/signup.html")
+    return render_template("users/signup.html")
 
 
 @bp.route('/login', methods=['POST', 'GET'])
