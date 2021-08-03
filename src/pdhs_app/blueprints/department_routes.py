@@ -82,9 +82,9 @@ def create_department():
             return jsonify(msg=error_msg), 500
         else:
             new_dept = Department(
-                id=id,
+                id=int(_id),
                 name=name,
-                faculty_id=faculty_id
+                faculty_id=int(faculty_id)
             )
             try:
                 new_dept.save_to_db()
