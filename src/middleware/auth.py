@@ -99,7 +99,7 @@ def register():
             except:
                 return jsonify(msg="Could not save new user to database"), 500
             return jsonify({'msg': 'User created successfully'}), 201
-        return render_template('signup.html')
+        return render_template("users/signup.html")
 
 
 @bp.route('/login', methods=['POST'])
@@ -119,7 +119,7 @@ def login():
         else:
             return jsonify(msg='Invalid ID or password'), 401
     else:
-        return 404
+        return render_template("users/login.html") #404
 
 
 @bp.route('/logout', methods=["DELETE"])
