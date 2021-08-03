@@ -67,23 +67,24 @@ def create_department():
     Create a department
     """
     if request.method == 'POST':
-        id = request.json.get('id', None)
-        name = request.json.get('name', None)
-        provost_id = request.json.get('provost_id', None)
+        _id = request.form['id'] if request.form['id'] else request.json.get('id', None) 
+        name = request.form['name'] if request.form['name'] else request.json.get('name', None)
+        faculty_id = request.form['faculty_id'] if request.form['faculty_id'] else request.json.get('faculty_id', None)
+        
         error_msg = None
         if not id:
             error_msg = 'Id is required.'
         elif not name:
             error_msg = 'Name is required.'
-        elif not provost_id:
-            provost_id = 0
+        elif not faculty_id:
+            faculty_id = 0
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
             new_dept = Department(
                 id=id,
                 name=name,
-                provost_id=provost_id
+                faculty_id=faculty_id
             )
             try:
                 new_dept.save_to_db()
