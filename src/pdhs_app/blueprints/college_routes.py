@@ -52,11 +52,11 @@ def create_new_college():
     Create a college
     """
     if request.method == 'POST':
-        id = request.form['id'] if request.form['id'] else request.json.get('id', None) 
+        _id = request.form['id'] if request.form['id'] else request.json.get('id', None) 
         name = request.form['name'] if request.form['name'] else request.json.get('name', None)
         provost_id = None # #request.form['provost_id'] if request.form['provost_id'] else request.json.get('provost_id', None)
         error_msg = None
-        if not id:
+        if not _id:
             error_msg = 'Id is required.'
         elif not name:
             error_msg = 'Name is required.'
@@ -65,14 +65,10 @@ def create_new_college():
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
-            new_college = College(
-                id=id,
-                name=name,
-                provost_id=provost_id
-            )
+            new_college = College(id=_id, name=name, provost_id=provost_id)
+            print(">>>" + new_college)
             try:
                 new_college.save_to_db()
-                return jsonify(new_college.to_json()), 201 
             except:
                 return jsonify(msg='Error saving College to database'), 500
             return jsonify(new_college.to_json()), 201 
