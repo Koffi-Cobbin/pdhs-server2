@@ -72,9 +72,10 @@ def create_new_college():
             )
             try:
                 new_college.save_to_db()
+                return jsonify(new_college.to_json()), 201 
             except:
                 return jsonify(msg='Error saving College to database'), 500
-            return jsonify(msg='Saved to Database'), 201 #new_college.to_json()
+            return jsonify(new_college.to_json()), 201 
     return render_template("colleges/add_college.html")
 
 
