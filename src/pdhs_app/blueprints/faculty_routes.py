@@ -8,7 +8,8 @@ bp = Blueprint('faculties', __name__, url_prefix='/faculty')
 @bp.route('/', methods=['GET'])
 def hello():
     if request.method == 'GET':
-        result = Faculty.query.all()
+        faculties = Faculty.query.all()
+        result = [faculty.to_json() for faculty in faculties]
     return jsonify(result)
 
 
