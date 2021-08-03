@@ -72,10 +72,9 @@ def create_new_college():
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
-#             new_college = College(id=int(_id), name=name, provost_id=provost_id)
-#             print(new_college.to_json())
+              new_college = College(id=int(_id), name=name, provost_id=provost_id)
             try:
-                College(id=int(_id), name=name, provost_id=provost_id).save_to_db()
+                new_college.save_to_db() # = College(id=int(_id), name=name, provost_id=provost_id).
             except:
                 return jsonify(msg='Error saving College to database'), 500
             return jsonify(new_college.to_json()), 201 
