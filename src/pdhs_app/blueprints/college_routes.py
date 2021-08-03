@@ -7,7 +7,7 @@ bp = Blueprint('colleges', __name__, url_prefix='/colleges')
 
 @bp.route('/test', methods=['GET', 'POST'])
 def test():
-    College(id=1, name="College of Engineering", provost_id=0).save_to_db()
+    College(id=1, name="College of Engineering", provost_id=None).save_to_db()
     result = College.query.all()
     return jsonify(result)
     
