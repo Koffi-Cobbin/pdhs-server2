@@ -31,27 +31,26 @@ def get_all_docs():
         for doc in result:
             documents.append(doc.to_json())
         if len(documents) == 0 or len(result) == 0:
-            return jsonify({'msg': 'Ther are no uploaded documents'}), 404
+            return jsonify({'msg': 'There are no uploaded documents'}), 404
         return jsonify({'documents': documents})
 
 
-@bp.route('/upload', methods=['POST'])
+@bp.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == 'POST':
         request_data = request.form.to_dict()
+        _id = request_data.get('id', None)
         doc_subject = request_data.get('subject', None)
         doc_description = request_data.get('description', None)
-        user_id = request_data.get('user_id', None) # sender_id
+        user_id = request_data.get('user_id', None) 
         doc_file = request.files.get('file', None)
         
         # Handling the creation of a new document object
-#         request_data = request.get_json()
-#         doc_id = request_data['id']
-#         doc_status = request_data['status']
-#         created_at = request_data['createdAt']
-#         updated_at = request_data['updatedAt']
         error_msg = None
-        if doc_subject is None:
+        if _id is None:
+            error_msg = 'Document ID is required'
+            
+        elif doc_subject is None:
             error_msg = 'Document subject is required'
             
         elif doc_description is None:
@@ -94,6 +93,7 @@ def upload():
         for recepient in recepients:
             new_approval = Approval(id=id, document_id=doc_id, recipient_id=id, status=doc_status).save_to_db()
         return jsonify(message="Done!")
+    return render_template("documents/upload_document.html")
 
 
 @bp.route('/new/<int:user_id>', methods=['GET'])
