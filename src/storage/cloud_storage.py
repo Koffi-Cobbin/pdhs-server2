@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from os import environ
 # Imports the Google Cloud client library
 from google.cloud import storage
-from src.middleware.cloud_credentials import get_cloud_credentials
+# from src.middleware.cloud_credentials import get_cloud_credentials
 from google.oauth2 import service_account
 
 # load environment variables
@@ -11,7 +11,8 @@ from google.oauth2 import service_account
 
 
 # use service_account to generate credentials object
-credentials = service_account.Credentials.from_service_account_info(get_cloud_credentials())
+json_data = json.loads(environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
+credentials = service_account.Credentials.from_service_account_info(json_data)
 
 # Instantiates a client
 storage_client = storage.Client(credentials=credentials)
