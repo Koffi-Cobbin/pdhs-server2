@@ -3,13 +3,17 @@ from os import environ
 # Imports the Google Cloud client library
 from google.cloud import storage
 from src.middleware.cloud_credentials import get_cloud_credentials
+from google.oauth2 import service_account
 
 # load environment variables
 # this will include in the Google Credentials file path
 # load_dotenv()
 
+
+# use service_account to generate credentials object
+credentials = service_account.Credentials.from_service_account_info(get_cloud_credentials())
+
 # Instantiates a client
-credentials = get_cloud_credentials()
 storage_client = storage.Client(credentials=credentials)
 
 # The name for the new bucket
