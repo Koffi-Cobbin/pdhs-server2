@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document </title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Document ID: </label><br>
+        <input type="number" name="id" placeholder="Doc ID"><br><br>
+        
+        <label>User ID: </label><br>
+        <input type="number" name="user_id" placeholder="Sender/User ID"><br><br>
+        
+        <label>Subject: </label><br>
+        <input type="text" name="subject" placeholder="e.g Request for classroom"><br><br>
+        
+        <label>Description: </label><br>
+        <input type="text" name="description"><br><br>
+        
+        <label>Choose file: </label><br>
+        <input type="file" name="file"><br><br>
+        
+        <button>Submit</button>
+    </form>
+</body>
+</html>
