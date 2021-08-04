@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, render_template
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.approvals.approval import Approval
