@@ -181,4 +181,4 @@ def delete_document(document_id):
         if error_msg is not None:
             return jsonify(msg=error_msg), 404
         else:
-            return jsonify(msg='Document deleted successfully'
+            return jsonify(msg='Document deleted successfully')
