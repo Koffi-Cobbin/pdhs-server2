@@ -1,5 +1,6 @@
 import os
-from flask import Flask
+from flask import Flask, request, flash, redirect, url_for
+from werkzeug.utils import secure_filename
 from src.database.db import db, migrate
 from src.middleware.security import jwt
 from flask_cors import CORS
@@ -39,8 +40,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # ensure the instance folder exists
 try:
     os.makedirs(app.instance_path)
-except OSError:
-    pass
+except OSError as e:
+        print(e)
 
 # Initialize CORS
 CORS(app)
