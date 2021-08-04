@@ -84,7 +84,7 @@ def upload():
                     new_document.save_to_db()
                     return jsonify(document=new_document.id), 201
                 except:
-                    return jsonify(msg='Error saving document', new_document), 500
+                    return jsonify(msg='Error saving document', doc=new_document), 500
         else:
             return jsonify(msg="File type not supported"), 201
 
