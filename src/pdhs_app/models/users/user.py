@@ -21,7 +21,7 @@ class User(db.Model):
     
 
     def __repr__(self):
-        return '<User %r>' % self.user_id
+        return '<User %r>' % self.id
 
     @classmethod
     def find_by_email(cls, email):
