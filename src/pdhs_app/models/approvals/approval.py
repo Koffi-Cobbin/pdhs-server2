@@ -5,7 +5,7 @@ class Approval(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     document_id = db.Column(db.String(50), db.ForeignKey('document.id'), nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    status = db.Column(db.Boolean)
+    status = db.Column(db.Boolean, default=False)
 
     def __init__(self, id, document_id, recipient_id, status):
         self.id = id
