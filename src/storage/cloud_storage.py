@@ -6,7 +6,7 @@ from google.cloud import storage
 
 # load environment variables
 # this will include in the Google Credentials file path
-load_dotenv()
+# load_dotenv()
 
 # Instantiates a client
 storage_client = storage.Client()
