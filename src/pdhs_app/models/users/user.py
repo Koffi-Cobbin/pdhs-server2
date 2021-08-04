@@ -1,7 +1,8 @@
 from src.database.db import db
 from src.middleware.utils import Utils
 import src.pdhs_app.models.users.errors as UserErrors
-
+from src.pdhs_app.models.faculties.faculty import Faculty
+from src.pdhs_app.models.colleges.college import College
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
