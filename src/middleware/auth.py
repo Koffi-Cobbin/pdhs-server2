@@ -53,7 +53,7 @@ def check_if_token_revoked(jwt_header, jwt_payload):
 @bp.route('/signup', methods=['POST', 'GET'])
 def register_user():
     if request.method == 'POST':
-        id = request.form['id'] if request.form['id'] else request.json.get('id', None)
+        _id = request.form['id'] if request.form['id'] else request.json.get('id', None)
         first_name = request.form['first_name'] if request.form['first_name'] else request.json.get('first_name', None)
         last_name = request.form['last_name'] if request.form['last_name'] else request.json.get('last_name', None)
         email = request.form['email'] if request.form['email'] else request.json.get('email', None)
@@ -67,7 +67,7 @@ def register_user():
             error = 'Email is required.'
         elif not first_name:
             error = 'First name is required.'
-        elif not id:
+        elif not _id:
             error = 'ID is required.'
         elif not last_name:
             error = 'Last name is required.'
@@ -77,8 +77,8 @@ def register_user():
             error = 'Department is required.'
         elif not password:
             error = 'Password is required.'
-        elif User.find_by_id(id) is not None:
-            error = f"The ID {id} is already registered."
+        elif User.find_by_id(_id) is not None:
+            error = f"The ID {_id} is already registered."
         elif User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
 
@@ -87,7 +87,7 @@ def register_user():
         else:
             password = generate_password_hash(password)
             new_user = User(
-                id=id,
+                id=_id,
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
@@ -106,14 +106,14 @@ def register_user():
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        id = request.json.get('id', None)
+        _id = request.json.get('id', None)
         password = request.json.get('password', None)
         try:
-            user = User.find_by_id(id)
+            user = User.find_by_id(_id)
         except:
             return jsonify(message="User Don't Exist")
         correct_password = check_password_hash(user.password, password)
-        if id is not None and correct_password:
+        if _id is not None and correct_password:
             access_token = create_access_token(identity=user)
             refresh_token = create_refresh_token(identity=user)
             return jsonify(access_token=access_token, refresh_token=refresh_token, user=user.to_json()), 200
