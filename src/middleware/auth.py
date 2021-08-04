@@ -15,10 +15,12 @@ from .tokens import TokenBlocklist
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-@bp.route('/hello', methods=['GET'])
-def hello():
+@bp.route('/', methods=['GET'])
+def all():
     if request.method == 'GET':
-        return render_template("users/signup.html")
+        result = User.query.all()
+        users = [user.to_json() for user in result]
+        return jsonify(users=users)
 
 
 @jwt.user_identity_loader
@@ -48,17 +50,16 @@ def check_if_token_revoked(jwt_header, jwt_payload):
     return token is not None
 
 
-@bp.route('/register', methods=['POST', 'GET'])
-def register():
+@bp.route('/signup', methods=['POST', 'GET'])
+def register_user():
     if request.method == 'POST':
-        request_data = request.get_json()
-        id = request_data['user_id']
-        first_name = request_data['first_name']
-        last_name = request_data['last_name']
-        email = request_data['email']
-        password = request_data['password']
-        portfolio_id = request_data['portfolio_id']
-        department_id = request_data['department_id']
+        id = request.form['id'] if request.form['id'] else request.json.get('id', None)
+        first_name = request.form['first_name'] if request.form['first_name'] else request.json.get('first_name', None)
+        last_name = request.form['last_name'] if request.form['last_name'] else request.json.get('last_name', None)
+        email = request.form['email'] if request.form['email'] else request.json.get('email', None)
+        password = request.form['password'] if request.form['password'] else request.json.get('password', None)
+        portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
+        department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
 
         error = None
 
