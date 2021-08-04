@@ -95,7 +95,6 @@ def register_user():
                 portfolio_id=portfolio_id,
                 department_id=department_id
             )
-            print(new_user)
             try:
                 new_user.save_to_db()
             except:
