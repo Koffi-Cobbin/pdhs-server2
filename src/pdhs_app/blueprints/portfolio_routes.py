@@ -37,16 +37,15 @@ def get_portfolio_by_id(portfolio_id):
             return jsonify(portfolio.to_json()), 200
 
 
-@bp.route('/create', methods=['POST'])
+@bp.route('/new', methods=['POST'])
 def create_portfolio():
     """
     Create a portfolio
     """
     if request.method == 'POST':
-        id = request.json.get('id', None)
-        name = request.json.get('name', None)
-        can_approve = request.json.get('can_approve', None)
-        is_student = request.json.get('is_student', None)
+        _id = request.form['id'] if request.form['id'] else request.json.get('id', None) 
+        name = request.form['name'] if request.form['name'] else request.json.get('name', None)
+        
         error_msg = None
         if not id:
             error_msg = 'Id is required.'
@@ -55,17 +54,13 @@ def create_portfolio():
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
-            new_portfolio = Portfolio(
-                id=id,
-                name=name,
-                can_approve=bool(can_approve),
-                is_student=bool(is_student)
-            )
+            new_portfolio = Portfolio(id=_id, name=name)
             try:
                 new_portfolio.save_to_db()
             except:
                 return jsonify(msg='Error saving Portfolio to database'), 500
             return jsonify(new_portfolio.to_json()), 201
+    return render_template("portfolio/add_portfolio.html")
 
 
 @bp.route('/update/<int:portfolio_id>', methods=['PUT'])
