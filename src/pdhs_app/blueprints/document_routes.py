@@ -1,24 +1,93 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.approvals.approval import Approval
+from werkzeug.utils import secure_filename
+from storage.cloud_storage import delete_blob, upload_blob
+import os
 
-bp = Blueprint('documents', __name__, url_prefix='/document')
+bp = Blueprint('documents', __name__, url_prefix='/documents')
+
+
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+def _allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@bp.route('/', methods=['GET'])
+def get_all_docs():
+    """
+    Return all the documents in the document table
+    """
+    if request.method == 'GET':
+        result = []
+        documents = []
+        try:
+            result = Document.query.all()
+        except:
+            return jsonify({'msg': 'There was an error retrieving the items requested'}), 500
+        for doc in result:
+            documents.append(doc.to_json())
+        if len(documents) == 0 or len(result) == 0:
+            return jsonify({'msg': 'Ther are no uploaded documents'}), 404
+        return jsonify({'documents': documents})
 
 
 @bp.route('/upload', methods=['POST'])
 def upload():
     if request.method == 'POST':
+        request_data = request.form.to_dict()
+        doc_subject = request_data.get('subject', None)
+        doc_description = request_data.get('description', None)
+        user_id = request_data.get('user_id', None) # sender_id
+        doc_file = request.files.get('file', None)
+        
         # Handling the creation of a new document object
-        request_data = request.get_json()
-        doc_id = request_data['id']
-        doc_status = request_data['status']
-        doc_subject = request_data['subject']
-        doc_description = request_data['description']
-        doc_sender = request_data['sender_id']
-        created_at = request_data['createdAt']
-        updated_at = request_data['updatedAt']
-        doc_file = request_data['file']
+#         request_data = request.get_json()
+#         doc_id = request_data['id']
+#         doc_status = request_data['status']
+#         created_at = request_data['createdAt']
+#         updated_at = request_data['updatedAt']
+        error_msg = None
+        if doc_subject is None:
+            error_msg = 'Document subject is required'
+            
+        elif doc_description is None:
+            error_msg = 'Document description is required'
+            
+        elif user_id is None:
+            error_msg = 'User ID is required'
+            
+        if doc_file is None:
+            error_msg = 'No selected file'
+            
+        if error_msg is not None:
+            return jsonify(msg=error_msg), 500
+        else:
+            new_document = Document(
+                subject=doc_subject,
+                user_id=user_id,
+                description=doc_description #name , file
+            )   
+
+        if _allowed_file(doc_file.filename):
+                filename = secure_filename(doc_file.filename)
+                new_document.name = filename
+                try:
+                    document_url = upload_blob(doc_file.stream, filename)
+                    if document_url is not None:
+                        new_document.file = document_url
+                except Exception as e:
+                    print('Error uploading file: %s' % e)
+                try:
+                    new_document.save_to_db()
+                    return jsonify(document=new_document.id), 201
+                except:
+                    return jsonify(msg='Error saving document'), 500
+        else:
+            return jsonify(msg="File type not supported"), 201
 
         # Handling the associated people to approve the document
         recepients = request_data['recepients']
@@ -54,9 +123,7 @@ def cancel():
         for approval in all_approvals:
             approval.delete_from_db()
         Document.query.filter_by(id=document_id).delete_from_db()
-        return {"message": "Done"}   
-        
-        return "Hello from /document"
+        return {"message": "Done"}
 
 
 @bp.route('/user/<int:user_id>', methods=['GET'])
@@ -97,7 +164,21 @@ def get_document_by_id(document_id):
         elif document is not None:
             return jsonify(document.to_json())
 
-
-@bp.route('/upload', methods=['POST'])
-def upload_document():
-    pass
+@bp.route('/delete/<int:document_id>', methods=['DELETE'])
+def delete_document(document_id):
+    if request.method == 'DELETE':
+        error_msg = None
+        try:
+            document = Document.find_by_id(document_id)
+        except:
+            error_msg = 'Error occured finding document'
+        if document is not None:
+            try:
+                delete_blob(document.name)
+                document.delete_from_db()
+            except:
+                error_msg = 'Error occured deleting Document'
+        if error_msg is not None:
+            return jsonify(msg=error_msg), 404
+        else:
+            return jsonify(msg='Document deleted successfully'
