@@ -2,14 +2,15 @@ from dotenv import load_dotenv
 from os import environ
 # Imports the Google Cloud client library
 from google.cloud import storage
-
+from src.middleware.cloud_credentials import get_cloud_credentials
 
 # load environment variables
 # this will include in the Google Credentials file path
 # load_dotenv()
 
 # Instantiates a client
-storage_client = storage.Client()
+credentials = get_cloud_credentials()
+storage_client = storage.Client(credentials=credentials)
 
 # The name for the new bucket
 bucket_name = environ.get('GOOGLE_CLOUD_STORAGE_BUCKET_NAME')
