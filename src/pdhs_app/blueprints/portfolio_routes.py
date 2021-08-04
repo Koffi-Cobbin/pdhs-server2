@@ -37,7 +37,7 @@ def get_portfolio_by_id(portfolio_id):
             return jsonify(portfolio.to_json()), 200
 
 
-@bp.route('/new', methods=['POST'])
+@bp.route('/new', methods=['POST', 'GET'])
 def create_portfolio():
     """
     Create a portfolio
