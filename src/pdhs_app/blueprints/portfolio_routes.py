@@ -60,7 +60,7 @@ def create_portfolio():
             except:
                 return jsonify(msg='Error saving Portfolio to database'), 500
             return jsonify(new_portfolio.to_json()), 201
-    return render_template("portfolio/add_portfolio.html")
+    return render_template("portfolios/add_portfolio.html")
 
 
 @bp.route('/update/<int:portfolio_id>', methods=['PUT'])
