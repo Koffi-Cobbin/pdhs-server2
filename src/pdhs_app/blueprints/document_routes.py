@@ -3,7 +3,7 @@ from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.approvals.approval import Approval
 from werkzeug.utils import secure_filename
-from storage.cloud_storage import delete_blob, upload_blob
+from src.storage.cloud_storage import delete_blob, upload_blob
 import os
 
 bp = Blueprint('documents', __name__, url_prefix='/documents')
