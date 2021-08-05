@@ -161,6 +161,7 @@ def get_department_users(department_id):
     users = []
     for user in user_obj_lst:
         user_json = user.to_json()
-        user_json['portfolio_id']=Portfolio.find_by_id(user_json['portfolio_id']).to_json()
+#         portfolio = user_json['portfolio']
+#         portfolio['id']=Portfolio.find_by_id(user_json['portfolio_id']).to_json()
         users.append(user_json)
     return jsonify(department_users=users)
