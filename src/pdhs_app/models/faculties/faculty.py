@@ -7,7 +7,6 @@ class Faculty(db.Model):
     college_id = db.Column(db.Integer, db.ForeignKey('college.id', use_alter=True), nullable=False)
     dean_id = db.Column(db.Integer, db.ForeignKey('user.id', use_alter=True), nullable=True)
     departments = db.relationship('Department', lazy='select', backref=db.backref('faculty', lazy='joined'))
-    other_users = db.relationship("OtherUser", lazy='select', backref=db.backref('faculty', lazy='joined'))
 
     def __repr__(self):
         return '<Faculty %r>' % self.name
