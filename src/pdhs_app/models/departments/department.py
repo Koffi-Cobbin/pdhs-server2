@@ -5,7 +5,6 @@ class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=False)
-    users = db.relationship("User", lazy='select', backref=db.backref('department', lazy='joined'))
 
     def __repr__(self):
         return '<Department %r>' % self.name
