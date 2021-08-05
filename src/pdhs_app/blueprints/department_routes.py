@@ -12,8 +12,7 @@ bp = Blueprint('department', __name__, url_prefix='/department')
 def get_departments(college_id):
     if request.method == 'GET':
         faculties = Faculty.query.filter_by(college_id=college_id)
-        
-        department_lsts = [Department.query.filter_by(faculty_id=faculty.to_json()['faculty_id']) for faculty in faculties]
+        department_lsts = [Department.query.filter_by(faculty_id=faculty.to_json()['id']) for faculty in faculties]
         print("__________________________DEPARTMENTS__________________________", department_lsts)
         departments = []
         for i in range(len(department_lsts)-1):
