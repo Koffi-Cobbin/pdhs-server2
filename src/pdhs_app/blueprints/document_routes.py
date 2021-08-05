@@ -143,7 +143,7 @@ def get_user_documents(user_id):
             error_msg = 'Error occured retrieving documents'
         if error_msg is not None:
             return jsonify(msg=error_msg)
-        elif len(documents) > 0:
+        elif len(result) > 0:
             for doc in result:
                 documents.append(doc.to_json())
             return jsonify(documents=documents)
