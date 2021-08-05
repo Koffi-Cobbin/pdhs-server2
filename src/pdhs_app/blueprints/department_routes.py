@@ -20,9 +20,9 @@ def get_departments(college_id):
         
         departments = []
         
-        for i in range(len(department_obj_lsts)-1):
-            for j in range(len(i)-1):
-                departments.append(j.to_json())
+        for lst in department_obj_lsts:
+            for lst_obj in lst:
+                departments.append(lst_obj.to_json())
   
         print("__________________________RESULT__________________________", departments)
         return jsonify(departments=departments)
