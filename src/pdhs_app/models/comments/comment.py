@@ -3,10 +3,8 @@ from src.database.db import db
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey(
-        'user.id'), nullable=False)
-    document_id = db.Column(db.String(100), db.ForeignKey(
-        'document.id'), nullable=False)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable=False)
     content = db.Column(db.String(255), nullable=True)
 
     def __repr__(self):
