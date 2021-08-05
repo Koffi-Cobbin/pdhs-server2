@@ -7,12 +7,6 @@ class Approval(db.Model):
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     status = db.Column(db.Boolean, default=False)
 
-    def __init__(self, id, document_id, recipient_id, status):
-        self.id = id
-        self.document_id = document_id
-        self.recipient_id = recipient_id
-        self.status = status
-
     def __repr__(self):
         return '<Approval %r>' % self.id
 
