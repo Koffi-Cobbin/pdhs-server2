@@ -20,7 +20,7 @@ def get_departments(college_id):
         
         departments = []
         
-        for i in range(len(department_lsts)-1):
+        for i in range(len(department_obj_lsts)-1):
             for j in range(len(i)-1):
                 departments.append(j.to_json())
   
