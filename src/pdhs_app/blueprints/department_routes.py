@@ -152,6 +152,9 @@ def get_department_portfolios(department_id):
 @bp.route('get_department_users/<int:department_id>', methods=['DELETE'])
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
-    user_lst = [ user.portfolio_id=Portfolio.find_by_id(user.portfolio_id).to_json() for user in user_obj_lst ]
-    users = [ user.to_json() for user in user_lst ]
+    users = []
+    for user in user_obj_lst:
+        user_json = user.to_json()
+        user_json['portfolio_id']=Portfolio.find_by_id(user_json['portfolio_id']).to_json()
+        users.append(user_json)
     return jsonify(department_users=users)
