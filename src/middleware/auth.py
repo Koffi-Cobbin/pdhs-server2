@@ -106,8 +106,8 @@ def register_user():
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        _id = request.json.get('id', None)
-        password = request.json.get('password', None)
+        _id = request.form['id'] if request.form['id'] else request.json.get('id', None)
+        password = request.form['password'] if request.form['password'] else request.json.get('password', None)
         try:
             user = User.find_by_id(_id)
         except:
