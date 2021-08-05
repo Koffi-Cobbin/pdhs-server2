@@ -12,12 +12,12 @@ import json
 
 
 # use service_account to generate credentials object
-json_data = json.loads(environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
-credentials = service_account.Credentials.from_service_account_info(json_data)
+info = json.loads(environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
+# credentials = service_account.Credentials.from_service_account_info(info)
 
-print('................................credentials.............', credentials)
+print('................................credentials.............', info)
 # Instantiates a client
-storage_client = storage.Client.from_service_account_info(credentials)
+storage_client = storage.Client.from_service_account_info(info)
 
 # The name for the new bucket
 bucket_name = environ.get('GOOGLE_CLOUD_STORAGE_BUCKET_NAME')
