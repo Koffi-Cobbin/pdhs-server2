@@ -44,7 +44,7 @@ class User(db.Model):
          department = self.department.to_json()
          faculty = Faculty.find_by_id(department['faculty_id']).to_json()
          college = College.find_by_id(faculty['college_id']).to_json()
-        return {
+         return {
             'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
@@ -52,7 +52,7 @@ class User(db.Model):
             'portfolio': self.portfolio.to_json()['name'],
             'department_id': self.department_id,
             'college_id': college['id']
-        }
+         }
 
     @staticmethod
     def is_login_valid(user_id, password):
