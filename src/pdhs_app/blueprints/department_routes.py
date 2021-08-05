@@ -19,7 +19,7 @@ def get_departments(college_id):
             for j in range(len(i)-1):
                 departments.append(j.to_json())
 #         result = [department.to_json() for department in departments]
-        print("__________________________RESULT__________________________", result)
+        print("__________________________RESULT__________________________", departments)
         return jsonify(departments=departments)
 
 @bp.route('/', methods=['GET'])
