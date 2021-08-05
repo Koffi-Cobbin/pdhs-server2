@@ -31,7 +31,7 @@ def download_blob(source_blob_name, destination_file_name, bucket_name=bucket_na
     # source_blob_name = "storage-object-name"
     # destination_file_name = "local/path/to/file"
 
-    storage_client = storage.Client()
+#     storage_client = storage.Client()
 
     bucket = storage_client.bucket(bucket_name)
 
