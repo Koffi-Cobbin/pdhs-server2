@@ -8,7 +8,7 @@ class Document(db.Model):
     name = db.Column(db.String(120), nullable=False)
     subject = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=True)
-    file_path = db.Column(db.String(255), nullable=False)
+    file = db.Column(db.String(255), nullable=False) #file_path
     progress = db.Column(db.String(50), nullable=False, default='Pending')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
