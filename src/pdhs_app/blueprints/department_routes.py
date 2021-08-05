@@ -13,18 +13,13 @@ def get_departments(college_id):
     if request.method == 'GET':
         faculty_obj_lst = Faculty.query.filter_by(college_id=college_id) 
         faculty_json_lst = [faculty_obj.to_json() for faculty_obj in faculty_obj_lst]
-        print("__________________________FACULTIES__________________________", faculty_json_lst)
-        
         department_obj_lsts = [Department.query.filter_by(faculty_id=faculty['id']) for faculty in faculty_json_lst]
-        print("__________________________DEPARTMENTS__________________________", department_obj_lsts[0][0].to_json())
         
         departments = []
         
         for lst in department_obj_lsts:
             for lst_obj in lst:
                 departments.append(lst_obj.to_json())
-  
-        print("__________________________RESULT__________________________", departments)
         return jsonify(departments=departments)
 
 @bp.route('/', methods=['GET'])
@@ -156,7 +151,7 @@ def get_department_portfolios(department_id):
         portfolios.append(Portfolio.find_by_id(id).to_json())
     return jsonify(portfolios)
 
-@bp.route('get_department_users/<int:department_id>', methods=['GET'])
+@bp.route('users/<int:department_id>', methods=['GET'])
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
     users = []
