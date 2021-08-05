@@ -49,7 +49,7 @@ class User(db.Model):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email,
-            'portfolio': self.portfolio.to_json()['name'],
+            'portfolio': self.portfolio.to_json(),
             'department_id': self.department_id,
             'college_id': college['id']
          }
