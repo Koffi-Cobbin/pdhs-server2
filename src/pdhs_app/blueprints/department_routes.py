@@ -13,7 +13,7 @@ def get_departments(college_id):
     if request.method == 'GET':
         faculty_obj_lst = Faculty.query.filter_by(college_id=college_id) 
         faculty_json_lst = [faculty_obj.to_json() for faculty_obj in faculty_obj_lst]
-        print("__________________________FACULTIES__________________________", faculties)
+        print("__________________________FACULTIES__________________________", faculty_json_lst)
         
         department_lsts = [Department.query.filter_by(faculty_id=faculty['id']) for faculty in faculty_json_lst]
         print("__________________________DEPARTMENTS__________________________", department_lsts)
