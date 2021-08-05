@@ -15,7 +15,7 @@ import json
 info = json.loads(environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 # credentials = service_account.Credentials.from_service_account_info(info)
 
-print('................................credentials.............', info)
+# print('................................credentials.............', info)
 # Instantiates a client
 storage_client = storage.Client.from_service_account_info(info)
 
