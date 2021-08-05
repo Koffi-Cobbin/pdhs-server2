@@ -9,7 +9,7 @@ from src.pdhs_app.models.faculties.faculty import Faculty
 bp = Blueprint('department', __name__, url_prefix='/department')
 
 @bp.route('/get/<int:college_id>', methods=['GET'])
-def get_departments(college_id):
+def get_college_departments(college_id):
     if request.method == 'GET':
         faculty_obj_lst = Faculty.query.filter_by(college_id=college_id) 
         faculty_json_lst = [faculty_obj.to_json() for faculty_obj in faculty_obj_lst]
@@ -142,7 +142,7 @@ def delete_department(department_id):
         departments = Department.query.filter_by(college_id=college_id)
         return jsonify(departments)
 
-@bp.route('get_portfolio/<int:department_id>', methods=['DELETE'])
+@bp.route('get_portfolio/<int:department_id>', methods=['GET'])
 def get_department_portfolios(department_id):
     users = User.query.filter_by(department_id=department_id)
     portfolio_ids = list(set([ user.portfolio_id for user in users ].sort()))
