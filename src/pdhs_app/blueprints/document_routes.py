@@ -44,6 +44,9 @@ def upload():
         doc_description = request_data.get('description', None)
         user_id = request_data.get('user_id', None) 
         doc_file = request.files.get('file', None)
+        print("==========================================PRINTING DATA======================================")
+        print("======================DOC FILE====================", doc_file)
+        print("========================DATES==================", request.files.get('createdAt', None), request.files.get('updatedAt', None))
         
         # Handling the creation of a new document object
         error_msg = None
