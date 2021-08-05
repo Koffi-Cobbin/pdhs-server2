@@ -11,7 +11,8 @@ bp = Blueprint('department', __name__, url_prefix='/department')
 @bp.route('/get/<int:college_id>', methods=['GET'])
 def get_departments(college_id):
     if request.method == 'GET':
-        faculties = Faculty.query.filter_by(college_id=college_id)
+        print(type(college_id))
+        faculties = Faculty.query.filter_by(college_id=int(college_id))
         print("__________________________FACULTIES__________________________", faculties)
         department_lsts = [Department.query.filter_by(faculty_id=faculty.to_json()['id']) for faculty in faculties]
         print("__________________________DEPARTMENTS__________________________", department_lsts)
@@ -154,7 +155,7 @@ def get_department_portfolios(department_id):
         portfolios.append(Portfolio.find_by_id(id).to_json())
     return jsonify(portfolios)
 
-@bp.route('get_department_users/<int:department_id>', methods=['DELETE'])
+@bp.route('get_department_users/<int:department_id>', methods=['GET'])
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
     users = []
