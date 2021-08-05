@@ -61,7 +61,7 @@ class Document(db.Model):
             'user_id': self.user_id,
             'name': self.name,
             'subject': self.subject,
-            'file_path': self.file_path,
+            'file': self.file_path, #file_path
             'description': self.description,
             'progress': self.progress,
         }
