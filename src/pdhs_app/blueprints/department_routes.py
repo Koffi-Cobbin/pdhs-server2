@@ -18,7 +18,7 @@ def get_departments(college_id):
             for j in range(len(i)-1):
                 departments.append(j)
         result = [department.to_json() for department in departments]
-        return jsonify(result)
+        return jsonify(departments=result)
 
 @bp.route('/', methods=['GET'])
 def get_all_departments():
@@ -147,4 +147,11 @@ def get_department_portfolios(department_id):
     portfolios = []
     for id in portfolio_ids:
         portfolios.append(Portfolio.find_by_id(id).to_json())
+    return jsonify(portfolios)
+
+@bp.route('get_department_users/<int:department_id>', methods=['DELETE'])
+def get_department_users(department_id):
+    user_obj_lst = User.query.filter_by(department_id=department_id)
+    user_lst = [ user.portfolio_id=Portfolio.find_by_id(user.portfolio_id).to_json() for user in user_obj_lst ]
+    user_json_lst = [ user.to_json() for user in user_obj_lst ]
     return jsonify(portfolios)
