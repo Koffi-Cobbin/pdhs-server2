@@ -13,11 +13,13 @@ def get_departments(college_id):
     if request.method == 'GET':
         faculties = Faculty.query.filter_by(college_id=college_id)
         department_lsts = [Department.query.filter_by(faculty_id=faculty.id) for faculty in faculties]
+        print("__________________________DEPARTMENTS__________________________", department_lsts)
         departments = []
         for i in range(len(department_lsts)-1):
             for j in range(len(i)-1):
                 departments.append(j)
         result = [department.to_json() for department in departments]
+        print("__________________________RESULT__________________________", result)
         return jsonify(departments=result)
 
 @bp.route('/', methods=['GET'])
