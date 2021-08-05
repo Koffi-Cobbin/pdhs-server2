@@ -153,5 +153,5 @@ def get_department_portfolios(department_id):
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
     user_lst = [ user.portfolio_id=Portfolio.find_by_id(user.portfolio_id).to_json() for user in user_obj_lst ]
-    user_json_lst = [ user.to_json() for user in user_obj_lst ]
-    return jsonify(portfolios)
+    users = [ user.to_json() for user in user_lst ]
+    return jsonify(department_users=users)
