@@ -99,7 +99,8 @@ def upload():
 @bp.route('/new/<int:user_id>', methods=['GET'])
 def inbox(user_id):
     if request.method == 'GET':
-        result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
+#         result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
+        result = Document.query.filter_by(user_id=user_id, progress="Pending")
         inbox_documents = [document.to_json() for document in result]
         return jsonify(inbox_documents)    
 
