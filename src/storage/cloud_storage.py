@@ -59,7 +59,7 @@ def upload_blob(source_file, destination_blob_name, bucket_name=bucket_name):
     # The ID of your GCS object
     # destination_blob_name = "storage-object-name"
 
-    storage_client = storage.Client()
+    # storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
 
