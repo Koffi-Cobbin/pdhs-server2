@@ -1,6 +1,7 @@
 from src.database.db import db
 from src.middleware.utils import Utils
 import src.pdhs_app.models.users.errors as UserErrors
+from src.pdhs_app.models.departments.department import Department
 from src.pdhs_app.models.faculties.faculty import Faculty
 from src.pdhs_app.models.colleges.college import College
 
@@ -41,7 +42,7 @@ class User(db.Model):
         db.session.commit()
 
     def to_json(self):
-         department = self.department.to_json()
+         department = Department.find_by_id(self.department_id).to_json()
          faculty = Faculty.find_by_id(department['faculty_id']).to_json()
          college = College.find_by_id(faculty['college_id']).to_json()
          return {
