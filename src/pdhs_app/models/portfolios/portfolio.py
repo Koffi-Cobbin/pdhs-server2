@@ -5,7 +5,6 @@ class Portfolio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     users = db.relationship("User", lazy='select', backref=db.backref('portfolio', lazy='joined'))
-    other_users = db.relationship("OtherUser", lazy='select', backref=db.backref('portfolio', lazy='joined'))
 
     def __repr__(self):
         return '<Portfolio %r>' % self.id
