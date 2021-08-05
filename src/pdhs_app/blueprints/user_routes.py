@@ -5,7 +5,7 @@ import src.pdhs_app.models.users.decorators as user_decorators  # src.
 import src.pdhs_app.models.users.constants as UserConstants
 from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.departments.department import Department
-from src.pdhs_app.blueprints.document_routes import new as get_new_docs
+from src.pdhs_app.blueprints.document_routes import inbox as get_new_docs
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
