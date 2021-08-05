@@ -15,14 +15,14 @@ def get_departments(college_id):
         faculty_json_lst = [faculty_obj.to_json() for faculty_obj in faculty_obj_lst]
         print("__________________________FACULTIES__________________________", faculty_json_lst)
         
-        department_lsts = [Department.query.filter_by(faculty_id=faculty['id']) for faculty in faculty_json_lst]
-        print("__________________________DEPARTMENTS__________________________", department_lsts)
+        department_obj_lsts = [Department.query.filter_by(faculty_id=faculty['id']) for faculty in faculty_json_lst]
+        print("__________________________DEPARTMENTS__________________________", department_obj_lsts[0][0].to_json())
         
         departments = []
         
         for i in range(len(department_lsts)-1):
             for j in range(len(i)-1):
-                departments.append(j)
+                departments.append(j.to_json())
   
         print("__________________________RESULT__________________________", departments)
         return jsonify(departments=departments)
