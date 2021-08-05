@@ -41,18 +41,17 @@ class User(db.Model):
         db.session.commit()
 
     def to_json(self):
-        department = self.department.to_json()
-        faculty = Faculty.find_by_id(department['faculty_id']).to_json()
-        college = College.find_by_id(faculty['college_id']).to_json()
+         department = self.department.to_json()
+         faculty = Faculty.find_by_id(department['faculty_id']).to_json()
+         college = College.find_by_id(faculty['college_id']).to_json()
         return {
             'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email,
-            'portfolio': self.portfolio.to_json(),
-            'department': department,
-            'faculty': faculty,
-            'college': college
+            'portfolio': self.portfolio.to_json()['name'],
+            'department_id': self.department_id,
+            'college_id': college['id']
         }
 
     @staticmethod
