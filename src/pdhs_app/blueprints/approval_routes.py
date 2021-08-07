@@ -3,7 +3,7 @@ from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.approvals.approval import Approval
 from src.pdhs_app.models.approvals import errors as ApprovalErrors
 
-bp = Blueprint('approvals', __name__, url_prefix='/approval')
+bp = Blueprint('approvals', __name__, url_prefix='/approvals')
 
 
 @bp.route('/update', methods=['POST'])
