@@ -5,8 +5,8 @@ class Faculty(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     college_id = db.Column(db.Integer, db.ForeignKey('college.id', use_alter=True), nullable=False)
-    dean_id = db.Column(db.Integer, db.ForeignKey('user.id', use_alter=True), nullable=True)
     departments = db.relationship('Department', lazy='select', backref=db.backref('faculty', lazy='joined'))
+    users = db.relationship("User", lazy='select', backref=db.backref('college', lazy='joined'))
 
     def __repr__(self):
         return '<Faculty %r>' % self.name
@@ -31,7 +31,6 @@ class Faculty(db.Model):
         faculty = {
             'id': self.id,
             'name': self.name,
-            'college_id': self.college_id,
-            'dean_id': self.dean_id,
+            'college_id': self.college_id
         }
         return faculty

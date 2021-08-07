@@ -1,10 +1,6 @@
 from datetime import datetime, timezone
-from flask import (
-    Blueprint, request, jsonify, render_template
-)
-
-from flask_jwt_extended import (
-    create_access_token, create_refresh_token, get_jwt_identity, get_jwt, jwt_required, current_user)
+from flask import (Blueprint, request, jsonify, render_template)
+from flask_jwt_extended import (create_access_token, create_refresh_token, get_jwt_identity, get_jwt, jwt_required, current_user)
 from src.middleware.security import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -60,6 +56,9 @@ def register_user():
         password = request.form['password'] if request.form['password'] else request.json.get('password', None)
         portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
         department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
+        
+        faculty_id = request.json.get('faculty_id', None)
+        college_id = request.json.get('college_id', None)
 
         error = None
 
@@ -73,10 +72,16 @@ def register_user():
             error = 'Last name is required.'
         elif not portfolio_id:
             error = 'Portfolio is required.'
-        elif not department_id:
-            error = 'Department is required.'
+#         elif not department_id:
+#             error = 'Department is required.'
         elif not password:
             error = 'Password is required.'
+            
+        elif department_id and not (faculty_id and college_id):
+            error = 'Faculty and College IDs are required if Dept is provided.'
+        elif faculty_id and not college_id:
+            error = 'College ID is required if faculty is provided.'
+            
         elif User.find_by_id(_id) is not None:
             error = f"The ID {_id} is already registered."
         elif User.find_by_email(email) is not None:
@@ -93,7 +98,9 @@ def register_user():
                 email=email,
                 password=password,
                 portfolio_id=portfolio_id,
-                department_id=department_id
+                department_id=department_id,
+                faculty_id=faculty_id,
+                college_id=college_id
             )
             try:
                 new_user.save_to_db()

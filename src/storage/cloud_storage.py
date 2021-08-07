@@ -1,10 +1,11 @@
-from dotenv import load_dotenv
 from os import environ
-# Imports the Google Cloud client library
 from google.cloud import storage
-# from src.middleware.cloud_credentials import get_cloud_credentials
 from google.oauth2 import service_account
+from json import loads
 import json
+# Imports the Google Cloud client library
+# from src.middleware.cloud_credentials import get_cloud_credentials
+# from dotenv import load_dotenv
 
 # load environment variables
 # this will include in the Google Credentials file path
@@ -65,9 +66,9 @@ def upload_blob(source_file, destination_blob_name, bucket_name=bucket_name):
 
     # blob.upload_from_filename(source_file_name)
     # blob.upload_from_string(source_file.stream.read(), content_type='application/octet-stream')
-    blob.upload_from_file(source_file, rewind=True,
-                          content_type='application/octet-stream')
-    # blob.upload
+    blob.upload_from_file(source_file, rewind=True, content_type='application/octet-stream')
+    
+    print("Blob {} uploaded to {}.".format(source_file, destination_blob_name))
     return blob.public_url if blob.public_url else None
 
   

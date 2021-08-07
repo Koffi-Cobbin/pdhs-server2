@@ -72,7 +72,7 @@ def create_new_college():
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
-            new_college = College(id=int(_id), name=name, provost_id=provost_id)
+            new_college = College(id=int(_id), name=name)
             try:
                 new_college.save_to_db() # = College(id=int(_id), name=name, provost_id=provost_id).
             except:
@@ -89,7 +89,6 @@ def update_college(college_id):
     if request.method == 'PUT':
         college_id = request.json.get('id', None)
         name = request.json.get('name', None)
-        provost_id = request.json.get('provost_id', None)
 
         if not college_id:
             return jsonify(msg='Id is required.'), 500
@@ -99,8 +98,6 @@ def update_college(college_id):
                 if new_college is not None:
                     if name is not None:
                         new_college.name = name
-                    if provost_id is not None:
-                        new_college.provost_id = provost_id
                     new_college.save_to_db()
             except:
                 return jsonify(msg='Error updating College'), 500
