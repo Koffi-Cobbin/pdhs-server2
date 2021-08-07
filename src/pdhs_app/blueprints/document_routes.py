@@ -84,7 +84,7 @@ def upload():
                 except Exception as e:
                     print('Error uploading file: %s' % e)
                 try:
-                    new_document.save_to_db()
+#                     new_document.save_to_db()
                     return jsonify(document=new_document.id), 201
                 except:
                     return jsonify(msg='Error saving document', doc=new_document), 500
