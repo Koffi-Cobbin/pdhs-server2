@@ -57,8 +57,8 @@ def register_user():
         portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
         department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
         
-        faculty_id = request.json.get('faculty_id', None)
-        college_id = request.json.get('college_id', None)
+        faculty_id = request.form['faculty_id'] if request.form['faculty_id'] else request.json.get('faculty_id', None)
+        college_id = request.form['college_id'] if request.form['college_id']  else request.json.get('college_id', None)
 
         error = None
 
