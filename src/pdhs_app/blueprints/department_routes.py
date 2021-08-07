@@ -6,7 +6,7 @@ from src.pdhs_app.models.colleges.college import College
 from src.pdhs_app.models.faculties.faculty import Faculty
 
 
-bp = Blueprint('department', __name__, url_prefix='/department')
+bp = Blueprint('departments', __name__, url_prefix='/departments')
 
 @bp.route('/get/<int:college_id>', methods=['GET'])
 def get_college_departments(college_id):
