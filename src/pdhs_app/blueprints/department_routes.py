@@ -56,7 +56,7 @@ def get_department_by_id(department_id):
         try:
             department = Department.find_by_id(department_id)
         except:
-            error_msg = 'Error occured finding department'
+            error_msg = f'No department with ID {department_id} found'
         if error_msg is not None:
             return jsonify(msg=error_msg), 404
         elif department is not None:
@@ -139,8 +139,7 @@ def delete_department(department_id):
             return jsonify(msg=error_msg), 404
         else:
             return jsonify(msg='Department deleted successfully')
-        departments = Department.query.filter_by(college_id=college_id)
-        return jsonify(departments)
+
 
 @bp.route('get_portfolio/<int:department_id>', methods=['GET'])
 def get_department_portfolios(department_id):
@@ -150,6 +149,7 @@ def get_department_portfolios(department_id):
     for id in portfolio_ids:
         portfolios.append(Portfolio.find_by_id(id).to_json())
     return jsonify(portfolios)
+
 
 @bp.route('users/<int:department_id>', methods=['GET'])
 def get_department_users(department_id):
