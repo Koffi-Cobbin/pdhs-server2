@@ -2,7 +2,7 @@ from src.database.db import db
 from src.pdhs_app.models.approvals import errors as ApprovalErrors
 
 class Approval(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     status = db.Column(db.Boolean, default=False)
