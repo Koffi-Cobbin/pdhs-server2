@@ -1,6 +1,7 @@
 from src.database.db import db
 from src.middleware.utils import Utils
 import src.pdhs_app.models.users.errors as UserErrors
+from datetime import datetime
 # from src.pdhs_app.models.departments.department import Department
 # from src.pdhs_app.models.faculties.faculty import Faculty
 # from src.pdhs_app.models.colleges.college import College
@@ -14,7 +15,9 @@ class User(db.Model):
     portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'), nullable=False)
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'), nullable=True)
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=True)
-    department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=True)
+    department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=True, default=0)
+    last_login = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   
     documents = db.relationship("Document", lazy='select', backref=db.backref('user', lazy='joined'))
     comments = db.relationship("Comment", lazy='select', backref=db.backref('user', lazy='joined'))
