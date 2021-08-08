@@ -62,3 +62,21 @@ def get_approval_by_id(approval_id):
             return jsonify(msg=error_msg), 404
         elif approval is not None:
             return jsonify(approval.to_json())
+
+@bp.route('/delete/<int:approval_id>', methods=['DELETE'])
+def delete_approval(approval_id):
+    if request.method == 'DELETE':
+        error_msg = None
+        try:
+            approval = Approval.find_by_id(approval_id)
+        except:
+             error_msg = 'Error occured finding approval'
+        if approval is not None:
+            try:
+                approval.delete_from_db()
+            except:
+                error_msg = 'Error occured deleting Approval'
+        if error_msg is not None:
+            return jsonify(msg=error_msg), 404
+        else:
+            return jsonify(msg='Approval deleted successfully')
