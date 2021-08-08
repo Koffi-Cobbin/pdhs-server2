@@ -13,6 +13,7 @@ class Document(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     approvals = db.relationship('Approval', backref='document', lazy='joined')
+    comment = db.relationship('Comment', backref='document', lazy='joined', uselist=False)
 
     def __repr__(self):
         return '<Document %r>' % self.name
