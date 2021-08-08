@@ -38,6 +38,11 @@ def refresh():
     access_token = create_access_token(identity=identity, fresh=False)
     return jsonify(access_token=access_token)
 
+@jwt.token_verification_loader
+def verify_token(jwt_header, jwt_data):
+    print('verify_token', jwt_header)
+    return True
+
 
 @jwt.token_in_blocklist_loader
 def check_if_token_revoked(jwt_header, jwt_payload):
@@ -104,7 +109,8 @@ def register_user():
             )
             try:
                 new_user.save_to_db()
-            except:
+            except Exception as e:
+                print("Error saving user to database: ..............................\n", e)
                 return jsonify(msg="Could not save new user to database"), 500
             return jsonify({'msg': 'User created successfully'}), 201
     return render_template("users/signup.html")
@@ -121,6 +127,8 @@ def login():
             return jsonify(message="User Don't Exist")
         correct_password = check_password_hash(user.password, password)
         if _id is not None and correct_password:
+            user.last_login = datetime.utcnow()
+            user.save_to_db()
             access_token = create_access_token(identity=user)
             refresh_token = create_refresh_token(identity=user)
             return jsonify(access_token=access_token, refresh_token=refresh_token, user=user.to_json()), 200
