@@ -145,8 +145,8 @@ def get_user_documents(user_id):
         documents = []
         error_msg = None
         try:
-            result = Document.query.filter_by(user_id=user_id)
-            print("======================================", result.to_json())
+            result = Document.query.filter_by(user_id=int(user_id))
+            print("======================================", result)
         except:
             error_msg = 'Error occured retrieving documents'
         if error_msg is not None:
