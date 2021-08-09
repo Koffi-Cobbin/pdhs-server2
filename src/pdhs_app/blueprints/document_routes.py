@@ -98,7 +98,7 @@ def upload():
         # Handling the associated people to approve the document
         recepients = request_data['recepients']
         for recepient in recepients:
-#             new_approval = Approval(id=id, document_id=doc_id, recipient_id=id, status=doc_status).save_to_db()
+            new_approval = Approval(id=id, document_id=doc_id, recipient_id=id, status=doc_status).save_to_db()
         return jsonify(message="Done!")
     return render_template("documents/upload_document.html")
 
