@@ -39,7 +39,7 @@ def get_all_docs():
 def upload():
     if request.method == 'POST':
         request_data = request.form.to_dict()
-        _id = request_data.get('id', None)
+#         _id = request_data.get('id', None)
         doc_subject = request_data.get('subject', None)
         doc_description = request_data.get('description', None)
         user_id = request_data.get('user_id', None) 
@@ -50,10 +50,10 @@ def upload():
         
         # Handling the creation of a new document object
         error_msg = None
-        if _id is None:
-            error_msg = 'Document ID is required'
+#         if _id is None:
+#             error_msg = 'Document ID is required'
             
-        elif doc_subject is None:
+        if doc_subject is None:
             error_msg = 'Document subject is required'
             
         elif doc_description is None:
