@@ -15,6 +15,11 @@ def _allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@bp.route('/test', methods=['GET', 'POST'])
+def test():
+    print("======================================", request.json())
+    return request.json()
+
 
 @bp.route('/', methods=['GET'])
 def get_all_docs():
