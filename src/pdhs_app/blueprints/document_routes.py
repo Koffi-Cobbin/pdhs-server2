@@ -78,10 +78,11 @@ def upload():
                 user_id=user_id,
                 description=doc_description #name , file
             )   
-
+        doc_name = None
         if _allowed_file(doc_file.filename):
                 filename = secure_filename(doc_file.filename)
                 new_document.name = filename
+                doc_name = filename
                 try:
                     document_url = upload_blob(doc_file.stream, filename)
                     if document_url is not None:
@@ -96,9 +97,12 @@ def upload():
             return jsonify(msg="File type not supported"), 201
 
         # Handling the associated people to approve the document
-        recepients = request_data['recepients']
-        for recepient in recepients:
-            new_approval = Approval(id=id, document_id=doc_id, recipient_id=id, status=doc_status).save_to_db()
+        recipients = request_data['recipients']
+        print("===========================RECIPIENTS============================", recipients)
+        doc = Document.find_by_name(doc_name)
+        doc_id = doc.id
+        for recipient in recipients:
+            new_approval = Approval(document_id=doc_id, recipient_id=id, status=doc_status).save_to_db()
         return jsonify(message="Done!")
     return render_template("documents/upload_document.html")
 
