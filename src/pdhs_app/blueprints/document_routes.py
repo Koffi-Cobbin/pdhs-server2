@@ -97,12 +97,13 @@ def upload():
             return jsonify(msg="File type not supported"), 201
 
         # Handling the associated people to approve the document
-        recipients = request_data['recipients']
+        recipients = request_data['recipients'].keys()
         print("===========================RECIPIENTS============================", recipients)
         doc = Document.find_by_name(doc_name)
         doc_id = doc.id
+        
         for recipient in recipients:
-            new_approval = Approval(document_id=doc_id, recipient_id=id).save_to_db()
+            new_approval = Approval(document_id=doc_id, recipient_id=recipient).save_to_db()
         return jsonify(message="Done!")
     return render_template("documents/upload_document.html")
 
