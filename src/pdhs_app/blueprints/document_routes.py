@@ -102,7 +102,7 @@ def upload():
         doc = Document.find_by_name(doc_name)
         doc_id = doc.id
         for recipient in recipients:
-            new_approval = Approval(document_id=doc_id, recipient_id=id, status=doc_status).save_to_db()
+            new_approval = Approval(document_id=doc_id, recipient_id=id).save_to_db()
         return jsonify(message="Done!")
     return render_template("documents/upload_document.html")
 
