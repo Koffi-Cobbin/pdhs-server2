@@ -151,12 +151,13 @@ def get_user_documents(user_id):
         documents = []
         error_msg = None
         try:
-            result = Document.query.filter_by(user_id=user_id)
+            result = Approval.query.filter_by(recipient_id=user_id, status=False)
         except:
             error_msg = 'Error occured retrieving documents'
         if error_msg is not None:
             return jsonify(msg=error_msg)
-        for doc in result:
+        for apprv in result:
+            doc = Document.find_by_id(apprv.document_id)
             documents.append(doc.to_json())
         return jsonify(documents=documents)
 
