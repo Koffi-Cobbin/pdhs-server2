@@ -98,7 +98,7 @@ def upload():
 
         # Handling the associated people to approve the document
         result = request_data['recipients']
-        print("===========================RECIPIENTS============================", result)
+        print("===========================RECIPIENTS============================", result, type(result))
         doc = Document.find_by_name(doc_name)
         doc_id = doc.id
         recipients = result.keys()
