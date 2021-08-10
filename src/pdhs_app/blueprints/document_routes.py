@@ -4,7 +4,7 @@ from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.approvals.approval import Approval
 from werkzeug.utils import secure_filename
 from src.storage.cloud_storage import delete_blob, upload_blob
-import os
+import os, json
 
 bp = Blueprint('documents', __name__, url_prefix='/documents')
 
@@ -97,7 +97,7 @@ def upload():
             return jsonify(msg="File type not supported"), 201
 
         # Handling the associated people to approve the document
-        result = request_data['recipients']
+        result = json.loads(request_data['recipients'])
         print("===========================RECIPIENTS============================", result, type(result))
         doc = Document.find_by_name(doc_name)
         doc_id = doc.id
