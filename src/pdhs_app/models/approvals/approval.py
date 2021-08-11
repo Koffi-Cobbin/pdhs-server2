@@ -5,7 +5,7 @@ class Approval(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     document_id = db.Column(db.Integer, db.ForeignKey('document.id'), nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    status = db.Column(db.Boolean, default=False)
+    status = db.Column(db.String(50), default="Pending")
 
     def __repr__(self):
         return '<Approval %r>' % self.id
