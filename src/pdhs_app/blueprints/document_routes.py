@@ -148,21 +148,26 @@ def get_user_documents(user_id):
     uploaded by a particular user.
     """
     if request.method == 'GET':
-        documents = []
+        user_documents = []
         error_msg = None
         try:
-            result = Approval.query.filter_by(recipient_id=user_id)
+            documents = Document.query.filter_by(user_id=user_id)
         except:
-            error_msg = 'Error occured retrieving documents'
+            error_msg = 'Error occured retrieving user documents'
             
         if error_msg is not None:
             return jsonify(msg=error_msg)
         
-        for approval in result:
-            doc = Document.find_by_id(approval.document_id)
-            doc.progress = {approval.recipient_id: approval.status}
-            documents.append(doc.to_json())
-            print("=========================Sent Documents===============================", doc.to_json())
+        for document in documents:
+            doc_approvals = Approval.query.filter_by(document_id=document.id)
+            recipients = []
+            statuses = []
+            for approval in doc_approvals:
+                recipeints.append(approval.recipient_id)
+                statuses.append(approval.status)
+            document.approval_list = dict(zip(recipents, statuses))
+            user_documents.append(document.to_json())
+        print("=========================Sent Documents===============================", doc.to_json())
         return jsonify(documents=documents)
 
 
