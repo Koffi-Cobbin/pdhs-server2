@@ -169,7 +169,7 @@ def get_user_documents(user_id):
                 statuses.append(approval.status)
             document.approval_list = dict(zip(recipients, statuses))
             user_documents.append(document.to_json())
-        print("=========================Sent Documents===============================", doc.to_json())
+        print("=========================Sent Documents===============================", user_documents)
         return jsonify(documents=documents)
 
 
