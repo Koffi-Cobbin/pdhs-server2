@@ -66,6 +66,8 @@ class Document(db.Model):
             'file': self.file, 
             'description': self.description,
             'progress': self.progress,
-            'approval_list': self.approval_list
+            'approval_list': self.approval_list,
+            'created_at': str(self.created_at),
+            'updated_at': str(self.updated_at)
         }
         return doc
