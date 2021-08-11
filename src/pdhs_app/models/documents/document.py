@@ -12,6 +12,7 @@ class Document(db.Model):
     progress = db.Column(db.String(50), nullable=False, default='Pending')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    approval_list = db.Column(db.String(255), nullable=False)
     approvals = db.relationship('Approval', backref='document', lazy='joined')
     comment = db.relationship('Comment', backref='document', lazy='joined', uselist=False)
 
@@ -62,8 +63,9 @@ class Document(db.Model):
             'user_id': self.user_id,
             'name': self.name,
             'subject': self.subject,
-            'file': self.file, #file_path
+            'file': self.file, 
             'description': self.description,
             'progress': self.progress,
+            'approval_list': self.approval_list
         }
         return doc
