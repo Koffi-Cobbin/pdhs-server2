@@ -170,7 +170,7 @@ def get_user_documents(user_id):
             document.approval_list = dict(zip(recipients, statuses))
             user_documents.append(document.to_json())
         print("=========================Sent Documents===============================", user_documents)
-        return jsonify(documents=documents)
+        return jsonify(documents=user_documents)
 
 
 @bp.route('/<int:document_id>', methods=['GET'])
