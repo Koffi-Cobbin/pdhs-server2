@@ -167,7 +167,7 @@ def get_user_documents(user_id):
                 recipient_name = recipient.first_name + " " + recipient.last_name
                 recipeints.append(recipient_name)
                 statuses.append(approval.status)
-            document.approval_list = dict(zip(recipents, statuses))
+            document.approval_list = dict(zip(recipients, statuses))
             user_documents.append(document.to_json())
         print("=========================Sent Documents===============================", doc.to_json())
         return jsonify(documents=documents)
