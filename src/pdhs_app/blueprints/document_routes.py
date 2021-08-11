@@ -164,14 +164,6 @@ def get_user_documents(user_id):
             documents.append(doc.to_json())
             print("=========================Sent Documents===============================" doc.to_json())
         return jsonify(documents=documents)
-    
-fruits = ["Apple", "Pear", "Peach", "Banana"]
-prices = [0.35, 0.40, 0.40, 0.28]
-
-fruit_dictionary = dict(zip(fruits, prices))
-
-print(fruit_dictionary)
-
 
 
 @bp.route('/<int:document_id>', methods=['GET'])
