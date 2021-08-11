@@ -17,6 +17,7 @@ class User(db.Model):
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=True)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=True, default=0)
     last_login = db.Column(db.DateTime, nullable=True)
+    login_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   
     documents = db.relationship("Document", lazy='select', backref=db.backref('user', lazy='joined'))
