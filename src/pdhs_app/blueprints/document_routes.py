@@ -162,7 +162,7 @@ def get_user_documents(user_id):
             doc = Document.find_by_id(approval.document_id)
             doc.progress = {approval.recipient_id: approval.status}
             documents.append(doc.to_json())
-            print("=========================Sent Documents===============================" doc.to_json())
+            print("=========================Sent Documents===============================", doc.to_json())
         return jsonify(documents=documents)
 
 
