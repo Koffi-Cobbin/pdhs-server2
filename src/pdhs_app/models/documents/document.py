@@ -9,7 +9,7 @@ class Document(db.Model):
     subject = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=True)
     file = db.Column(db.String(255), nullable=False) 
-    progress = db.Column(db.String(50), nullable=False, default='Pending')
+    progress = db.Column(db.String(50), nullable=False, default='pending')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     approval_list = db.Column(db.String(255), nullable=True)
