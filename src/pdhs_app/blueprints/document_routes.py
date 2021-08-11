@@ -163,7 +163,9 @@ def get_user_documents(user_id):
             recipients = []
             statuses = []
             for approval in doc_approvals:
-                recipeints.append(approval.recipient_id)
+                recipient = User.find_by_id(approval.recipient_id)
+                recipient_name = recipient.first_name + " " + recipient.last_name
+                recipeints.append(recipient_name)
                 statuses.append(approval.status)
             document.approval_list = dict(zip(recipents, statuses))
             user_documents.append(document.to_json())
