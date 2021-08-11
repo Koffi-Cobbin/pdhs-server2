@@ -151,15 +151,27 @@ def get_user_documents(user_id):
         documents = []
         error_msg = None
         try:
-            result = Approval.query.filter_by(recipient_id=user_id, status=False)
+            result = Approval.query.filter_by(recipient_id=user_id)
         except:
             error_msg = 'Error occured retrieving documents'
+            
         if error_msg is not None:
             return jsonify(msg=error_msg)
-        for apprv in result:
-            doc = Document.find_by_id(apprv.document_id)
+        
+        for approval in result:
+            doc = Document.find_by_id(approval.document_id)
+            doc.progress = {approval.recipient_id: approval.status}
             documents.append(doc.to_json())
+            print("=========================Sent Documents===============================" doc.to_json())
         return jsonify(documents=documents)
+    
+fruits = ["Apple", "Pear", "Peach", "Banana"]
+prices = [0.35, 0.40, 0.40, 0.28]
+
+fruit_dictionary = dict(zip(fruits, prices))
+
+print(fruit_dictionary)
+
 
 
 @bp.route('/<int:document_id>', methods=['GET'])
