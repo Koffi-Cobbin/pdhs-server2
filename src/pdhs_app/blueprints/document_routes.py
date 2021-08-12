@@ -202,6 +202,7 @@ def delete_document(document_id):
         except:
             error_msg = 'Error occured finding document'
         if document is not None:
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ABOUT TO DELETE", document)
 #             try:
 #                 delete_blob(document.file)
 #             except:
