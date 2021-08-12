@@ -17,11 +17,10 @@ def _allowed_file(filename):
 
 @bp.route('/test/<int:user_id>', methods=['GET', 'POST'])
 def test(user_id):
-    result = get_user_documents(user_id)
-    res = result['documents']
+    documents = Document.query.filter_by(user_id=user_id)
     for doc in res:
-        if doc['recipients'] == {}:
-            Document.find_by_id(doc['id']).delete_from_db()
+        if doc.recipient_list == {}:
+            doc.delete_from_db()
 
 
 @bp.route('/', methods=['GET'])
