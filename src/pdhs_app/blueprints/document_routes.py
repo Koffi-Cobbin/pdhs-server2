@@ -203,7 +203,7 @@ def delete_document(document_id):
             error_msg = 'Error occured finding document'
         if document is not None:
             try:
-                delete_blob(document.name)
+                delete_blob(document.file)
             except:
                 error_msg = 'Error occured deleting Document from cloud.'
                 return jsonify(msg=error_msg), 404
