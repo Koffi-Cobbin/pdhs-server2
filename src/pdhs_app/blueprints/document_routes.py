@@ -193,9 +193,9 @@ def get_document_by_id(document_id):
         elif document is not None:
             return jsonify(document.to_json())
 
-@bp.route('/delete/<int:document_id>', methods=['GET'])
+@bp.route('/delete/<int:document_id>', methods=['DELETE'])
 def delete_document(document_id):
-    if request.method == 'GET':
+    if request.method == 'DELETE':
         error_msg = None
         try:
             document = Document.find_by_id(document_id)
