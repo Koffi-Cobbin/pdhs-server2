@@ -23,6 +23,7 @@ def test():
     documents = Document.query.all()
     for doc in documents:
         doc.delete_from_db()
+    return jsonify(msg="Done")
 
 
 @bp.route('/', methods=['GET'])
