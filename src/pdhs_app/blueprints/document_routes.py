@@ -19,7 +19,7 @@ def _allowed_file(filename):
 def test(user_id):
     documents = Document.query.filter_by(user_id=user_id)
     for doc in documents:
-        if doc.approval_list == null:
+        if doc.approval_list == Null:
             doc.delete_from_db()
 
 
