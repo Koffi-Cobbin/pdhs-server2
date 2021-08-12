@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, current_app, render_template
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.approvals.approval import Approval
+from src.pdhs_app.models.portfolios.portfolio import Portfolio
 from werkzeug.utils import secure_filename
 from src.storage.cloud_storage import delete_blob, upload_blob
 import os, json
@@ -166,8 +167,8 @@ def get_user_documents(user_id):
             statuses = []
             for approval in doc_approvals:
                 recipient = User.find_by_id(approval.recipient_id)
-                recipient_name = recipient.first_name + " " + recipient.last_name
-                recipients.append(recipient_name)
+                recipient_portfolio = Portfolio.find_by_id(recipient.portfolio_id) 
+                recipients.append(recipient_portfolio.name)
                 statuses.append(approval.status)
             document.approval_list = dict(zip(recipients, statuses))
             user_documents.append(document.to_json())
