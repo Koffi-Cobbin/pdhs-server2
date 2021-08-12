@@ -44,7 +44,7 @@ class Document(db.Model):
         """
         db.session.add(self)
         db.session.commit()
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", to_json()) 
+        return self.id
 
     def delete_from_db(self):
         """
