@@ -15,12 +15,14 @@ def _allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bp.route('/test/<int:user_id>', methods=['GET', 'POST'])
-def test(user_id):
-    documents = Document.query.filter_by(user_id=user_id)
+@bp.route('/test', methods=['GET', 'POST'])
+def test():
+    apvs = Approval.query.all()
+    for e in apvs:
+        e.delete_from_db()
+    documents = Document.query.all()
     for doc in documents:
-        if doc.approval_list is None:
-            doc.delete_from_db()
+        doc.delete_from_db()
 
 
 @bp.route('/', methods=['GET'])
