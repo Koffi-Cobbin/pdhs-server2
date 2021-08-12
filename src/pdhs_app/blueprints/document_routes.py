@@ -203,6 +203,14 @@ def delete_document(document_id):
             error_msg = 'Error occured finding document'
         if document is not None:
             print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ABOUT TO DELETE", document)
+            try:
+                approvals = Approval.query.filter_by(document_id=document.id)
+            except:
+                error_msg = 'Error occured getting Document approvals from database.'
+                return jsonify(msg=error_msg), 404
+            if approvals is not None:
+                for approval in approvals:
+                    approval.delete_from_db()
 #             try:
 #                 delete_blob(document.file)
 #             except:
