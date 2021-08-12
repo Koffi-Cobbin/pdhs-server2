@@ -83,7 +83,7 @@ def upload():
                 user_id=user_id,
                 description=doc_description #name , file
             )   
-        doc_url = None
+        doc_id= None
         if _allowed_file(doc_file.filename):
                 filename = secure_filename(doc_file.filename)
                 new_document.name = filename
@@ -91,11 +91,10 @@ def upload():
                     document_url = upload_blob(doc_file.stream, filename)
                     if document_url is not None:
                         new_document.file = document_url
-                        doc_url = document_url
                 except Exception as e:
                     print('Error uploading file: %s' % e)
                 try:
-                    new_document.save_to_db()
+                    doc_id = new_document.save_to_db()
                 except:
                     return jsonify(msg='Error saving document', doc=new_document), 500
         else:
@@ -104,8 +103,6 @@ def upload():
         # Handling the associated people to approve the document
         result = json.loads(request_data['recipients'])
         print("===========================RECIPIENTS============================", result, type(result))
-        doc = Document.find_by_file(doc_url)
-        doc_id = doc.id
         recipients = result.keys()
         print("===========================KEYS============================", recipients)
         for recipient in recipients:
