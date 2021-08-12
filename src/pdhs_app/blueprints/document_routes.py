@@ -15,10 +15,13 @@ def _allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bp.route('/test', methods=['GET', 'POST'])
-def test():
-    print("======================================", request.json())
-    return request.json()
+@bp.route('/test/<int:user_id>', methods=['GET', 'POST'])
+def test(user_id):
+    result = get_user_documents(user_id)
+    res = result['documents']
+    for doc in res:
+        if doc['recipients'] == {}:
+            Document.find_by_id(doc['id']).delete_from_db()
 
 
 @bp.route('/', methods=['GET'])
