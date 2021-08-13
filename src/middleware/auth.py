@@ -3,7 +3,7 @@ from flask import (Blueprint, request, jsonify, render_template)
 from flask_jwt_extended import (create_access_token, create_refresh_token, get_jwt_identity, get_jwt, jwt_required, current_user)
 from src.middleware.security import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from werkzeug.utils import secure_filename
 from src.database import db
 from src.pdhs_app.models.users.user import User
 from .tokens import TokenBlocklist
