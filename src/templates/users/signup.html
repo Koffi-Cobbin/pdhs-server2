@@ -7,7 +7,7 @@
     <title>LogIn</title>
 </head>
 <body>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <label>User ID: </label><br>
         <input type="number" name="id" placeholder="Student/Staff ID"><br><br>
         
@@ -19,6 +19,9 @@
         
         <label>E-mail: </label><br>
         <input type="email" name="email"><br><br>
+        
+        <label>Contact: </label><br>
+        <input type="tel" name="contact"><br><br>
         
         <label>Password: </label><br>
         <input type="password" name="password"><br><br>
@@ -51,6 +54,9 @@
         
         <label>College: </label><br>
         <input type="text" name="college_id"><br><br>
+        
+        <label>Choose user image: </label><br>
+        <input type="file" name="user_img"><br><br>
         
         <input type="submit" value="Submit">
     </form>
