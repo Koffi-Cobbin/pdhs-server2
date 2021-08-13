@@ -126,7 +126,7 @@ def inbox(user_id):
             return jsonify(msg=error_msg)
         
         if result:
-            documents = [ Document.query.filter_by(id=elem.document_id) for elem in result ]
+            documents = [ Document.find_by_id(id=elem.document_id) for elem in result ]
             
             for document in documents:
                 sender = User.find_by_id(document.user_id).to_json()
@@ -135,7 +135,7 @@ def inbox(user_id):
                 sender_contact = sender['contact']
                 sender_img_url = sender['']
                 document.user_id = jsonify(sender_id=document.user_id, name=sender_name, title=sender_title, contact=sender_contact, img_url=sender_img_url)
-        print("=========================Sent Documents===============================", documents)
+            print("=========================INBOX Documents===============================", documents)
         return jsonify(recieved_documents=documents)
     
 
