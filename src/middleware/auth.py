@@ -67,7 +67,7 @@ def register_user():
         email = request.form['email'] if request.form['email'] else request.json.get('email', None)
         contact = request.form['contact'] if request.form['contact'] else request.json.get('contact', None)
         password = request.form['password'] if request.form['password'] else request.json.get('password', None)
-        user_img = request.form['user_img'] if request.form['user_img'] else request.json.get('user_img', None)
+        user_img = request.files['user_img'] if request.files['user_img'] else request.files.get('user_img', None)
         portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
         department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
         
