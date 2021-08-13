@@ -104,7 +104,7 @@ def register_user():
         user_img_url = None
         
         if _allowed_file(user_img.filename):
-                filename = secure_filename(doc_file.filename)
+                filename = secure_filename(user_img.filename)
                 try:
                     user_img_url = upload_blob(user_img.stream, filename)
                 except Exception as e:
