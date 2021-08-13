@@ -11,6 +11,13 @@ from .tokens import TokenBlocklist
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+def _allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @bp.route('/', methods=['GET'])
 def all():
     if request.method == 'GET':
@@ -96,6 +103,16 @@ def register_user():
 
         user_img_url = None
         
+        if _allowed_file(user_img.filename):
+                filename = secure_filename(doc_file.filename)
+                try:
+                    user_img_url = upload_blob(user_img.stream, filename)
+                except Exception as e:
+                    print('Error uploading file: %s' % e)
+        else:
+            return jsonify(msg="File type not supported"), 201
+        
+        
         if error is not None:
             return jsonify({"msg": error}), 500
         else:
@@ -107,7 +124,7 @@ def register_user():
                 email=email,
                 password=password,
                 contact=contact,
-                img_url=user_img_url,
+                img_url=user_img_url if user_img_url else None,
                 portfolio_id=portfolio_id,
                 department_id=department_id,
                 faculty_id=faculty_id,
