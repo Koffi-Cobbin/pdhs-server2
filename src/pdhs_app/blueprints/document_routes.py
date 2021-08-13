@@ -114,11 +114,30 @@ def upload():
 
 @bp.route('/new/<int:user_id>', methods=['GET'])
 def inbox(user_id):
-    if request.method == 'GET':
-#         result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
-        result = Document.query.filter_by(user_id=user_id, progress="Pending")
-        inbox_documents = [document.to_json() for document in result]
-        return jsonify(inbox_documents)    
+        if request.method == 'GET':
+        recieved_documents = []
+        error_msg = None
+        try:
+            result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
+        except:
+            error_msg = 'Error occured retrieving recieved documents'
+            
+        if error_msg is not None:
+            return jsonify(msg=error_msg)
+        
+        if result:
+            documents = [ Document.query.filter_by(id=elem.document_id) for elem in result ]
+            
+            for document in documents:
+                sender = User.find_by_id(document.user_id).to_json()
+                sender_name = sender['first_name'] + " " + sender['last_name']
+                sender_title = Portfolio.find_by_id(sender[portfolio_id])
+                sender_contact = sender['contact']
+                sender_img_url = sender['']
+                document.user_id = jsonify(sender_id=document.user_id, name=sender_name, title=sender_title, contact=sender_contact, img_url=sender_img_url)
+        print("=========================Sent Documents===============================", documents)
+        return jsonify(recieved_documents=documents)
+    
 
 @bp.route('/approved/<int:user_id>', methods=['GET'])
 def approved(user_id):
