@@ -58,7 +58,9 @@ def register_user():
         first_name = request.form['first_name'] if request.form['first_name'] else request.json.get('first_name', None)
         last_name = request.form['last_name'] if request.form['last_name'] else request.json.get('last_name', None)
         email = request.form['email'] if request.form['email'] else request.json.get('email', None)
+        contact = request.form['contact'] if request.form['contact'] else request.json.get('contact', None)
         password = request.form['password'] if request.form['password'] else request.json.get('password', None)
+        user_img = request.form['user_img'] if request.form['user_img'] else request.json.get('user_img', None)
         portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
         department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
         
@@ -77,8 +79,8 @@ def register_user():
             error = 'Last name is required.'
         elif not portfolio_id:
             error = 'Portfolio is required.'
-#         elif not department_id:
-#             error = 'Department is required.'
+        elif not contact:
+            error = 'Contact is required.'
         elif not password:
             error = 'Password is required.'
             
@@ -92,6 +94,8 @@ def register_user():
         elif User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
 
+        user_img_url = None
+        
         if error is not None:
             return jsonify({"msg": error}), 500
         else:
@@ -102,6 +106,8 @@ def register_user():
                 last_name=last_name,
                 email=email,
                 password=password,
+                contact=contact,
+                img_url=user_img_url,
                 portfolio_id=portfolio_id,
                 department_id=department_id,
                 faculty_id=faculty_id,
