@@ -56,7 +56,9 @@ class User(db.Model):
             'portfolio': self.portfolio.to_json()['name'],
             'college_id': self.college_id,
             'faculty_id': self.faculty_id,
-            'department_id': self.department_id
+            'department_id': self.department_id,
+            'contact': self.contact,
+            'img_url': self.img_url
          }
 
     @staticmethod
