@@ -114,7 +114,7 @@ def upload():
 
 @bp.route('/new/<int:user_id>', methods=['GET'])
 def inbox(user_id):
-        if request.method == 'GET':
+    if request.method == 'GET':
         recieved_documents = []
         error_msg = None
         try:
