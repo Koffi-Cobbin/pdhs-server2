@@ -12,6 +12,8 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    contact = db.Column(db.String(255), nullable=False)
+    img_url = db.Column(db.String(1000), nullable=True)
     portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'), nullable=False)
     college_id = db.Column(db.Integer, db.ForeignKey('college.id'), nullable=True)
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=True)
