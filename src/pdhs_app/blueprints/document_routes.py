@@ -131,7 +131,7 @@ def inbox(user_id):
             for document in documents:
                 sender = User.find_by_id(document.user_id).to_json()
                 sender_name = sender['first_name'] + " " + sender['last_name']
-                sender_title = sender['portfolio_id']
+                sender_title = sender['portfolio']
                 sender_contact = sender['contact']
                 sender_img_url = sender['img_url']
                 document.user_id = jsonify(sender_id=document.user_id, name=sender_name, title=sender_title, contact=sender_contact, img_url=sender_img_url)
