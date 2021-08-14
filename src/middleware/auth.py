@@ -109,8 +109,6 @@ def register_user():
                     user_img_url = upload_blob(user_img.stream, filename)
                 except Exception as e:
                     print('Error uploading file: %s' % e)
-        else:
-            return jsonify(msg="File type not supported"), 201
         
         
         if error is not None:
