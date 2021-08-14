@@ -116,7 +116,7 @@ def upload():
 def inbox(user_id):
     if request.method == 'GET':
         recieved_documents = []
-        senders_info = []
+#         senders_info = []
         error_msg = None
         try:
             result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
@@ -135,10 +135,12 @@ def inbox(user_id):
                 sender_title = sender['portfolio']
                 sender_contact = sender['contact']
                 sender_img_url = sender['img_url']
-                recieved_documents.append(document.to_json())
-                senders_info.append({'name':sender_name, 'title':sender_title, 'contact':sender_contact, 'img_url':sender_img_url})
+                doc = document.to_json()
+                doc['user_info'] = {'name':sender_name, 'title':sender_title, 'contact':sender_contact, 'img_url':sender_img_url}
+                recieved_documents.append(doc)
+#                 senders_info.append()
         print("=========================INBOX Documents===============================", recieved_documents)
-        return jsonify({'documents': recieved_documents, 'senders': senders_info}) 
+        return jsonify({'documents': recieved_documents}) 
     
 
 @bp.route('/approved/<int:user_id>', methods=['GET'])
