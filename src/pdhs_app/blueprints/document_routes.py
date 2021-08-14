@@ -137,7 +137,7 @@ def inbox(user_id):
                 document.user_id = jsonify(sender_id=document.user_id, name=sender_name, title=sender_title, contact=sender_contact, img_url=sender_img_url)
                 recieved_documents.append(document.to_json())
             print("=========================INBOX Documents===============================", recieved_documents)
-        return jsonify(docs=recieved_documents)
+        return jsonify({'documents': recieved_documents}) 
     
 
 @bp.route('/approved/<int:user_id>', methods=['GET'])
