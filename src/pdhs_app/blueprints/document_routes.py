@@ -193,10 +193,10 @@ def get_user_documents(user_id):
                 recipient_portfolio = Portfolio.find_by_id(recipient.portfolio_id) 
                 recipients.append(recipient_portfolio.name)
                 statuses.append(approval.status)
-                if recipients:
-                    recipients.reverse()
-                if statuses:
-                    statuses.reverse()
+#                 if recipients:
+#                     recipients.reverse()
+#                 if statuses:
+#                     statuses.reverse()
             document.approval_list = dict(zip(recipients, statuses))
             user_documents.append(document.to_json())
         print("=========================Sent Documents===============================", user_documents)
