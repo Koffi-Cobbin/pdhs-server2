@@ -118,7 +118,7 @@ def inbox(user_id):
         recieved_documents = []
         error_msg = None
         try:
-            result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
+            result = Approval.query.filter_by(recipient_id=user_id)
         except:
             error_msg = 'Error occured retrieving recieved documents'
             
@@ -128,13 +128,19 @@ def inbox(user_id):
         documents = []
         if result:
             for approval in result:
-                recipient_list = Approval.query.filter_by(document_id=approval.document_id)
-                for recipient in recipient_list:
-                    if recipient.status == "approved":
-                        continue
-                    elif recipient.status == "pending" and recipient.recipient_id == user_id:
-                        doc = Document.find_by_id(id=recipient.document_id) 
-                        documents.append(doc)
+                if approval.status == "pending":
+                    recipient_list = Approval.query.filter_by(document_id=approval.document_id)
+                    for recipient in recipient_list:
+                        if recipient.status == "approved" and recipient.recipient_id != user_id :
+                            continue
+                        elif recipient.status == "rejected" and recipient.recipient_id != user_id :
+                            break
+                        elif recipient.status == "pending" and recipient.recipient_id == user_id:
+                            doc = Document.find_by_id(id=recipient.document_id) 
+                            documents.append(doc)
+                else:
+                    doc = Document.find_by_id(id=approval.document_id) 
+                    documents.append(doc)
             
 #             documents = [ Document.find_by_id(id=elem.document_id) for elem in result ]
             if documents:
