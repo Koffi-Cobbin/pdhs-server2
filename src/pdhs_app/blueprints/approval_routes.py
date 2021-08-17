@@ -28,6 +28,26 @@ def update():
             doc = Document.find_by_id(id=doc_id)
         except:
             return jsonify(message=f"Error updating document {doc_id}")
+        
+        try:
+            recipient_list = Approval.query.filter_by(document_id=doc_id)
+        except:
+            return jsonify(message=f"Error getting recipients for document {doc_id}")
+        
+        if recipient_list:
+            i = len(recipient_list)
+            for recipient in recipient_list:
+                    if recipient.status == "approved" and i > 0:
+                        i = i - 1
+                        continue
+                    elif recipient.status == "approved" and i == 0:
+                        doc.progress = recipient.status
+                    elif recipient.status == "rejected" and i >= 0:
+                        doc.progress = recipient.status
+                    else:
+                        i = i - 1
+                        continue
+                        
         doc.updated_at = datetime.utcnow()
         doc.save_to_db()
         
