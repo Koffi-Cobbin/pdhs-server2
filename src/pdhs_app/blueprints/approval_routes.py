@@ -14,7 +14,7 @@ def update():
         recipient_id = result['user_id']
         status = result['status']
         try:
-            approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id)
+            approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id).first()
         except:
             return jsonify(message=f"Error updating approval")
         print("===============Approval==============", approval)
