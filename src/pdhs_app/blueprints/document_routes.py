@@ -110,13 +110,12 @@ def upload():
             new_approval = Approval(document_id=doc_id, recipient_id=recipient).save_to_db()
         return jsonify(message="Done!")
     return render_template("documents/upload_document.html")
-
+                
 
 @bp.route('/new/<int:user_id>', methods=['GET'])
 def inbox(user_id):
     if request.method == 'GET':
         recieved_documents = []
-#         senders_info = []
         error_msg = None
         try:
             result = Approval.query.filter_by(recipient_id=user_id, status="Pending")
@@ -126,19 +125,28 @@ def inbox(user_id):
         if error_msg is not None:
             return jsonify(msg=error_msg)
         
+        documents = []
         if result:
-            documents = [ Document.find_by_id(id=elem.document_id) for elem in result ]
+            for approval in result:
+                recipient_list = Approval.query.filter_by(document_id=approval.document_id)
+                for recipient in recipient_list:
+                    if recipient.status == "approved":
+                        continue
+                    elif recipient.status == "pending" and recipient.recipient_id == user_id:
+                        doc = Document.find_by_id(id=recipient.document_id) 
+                        documents.append(doc)
             
-            for document in documents:
-                sender = User.find_by_id(document.user_id).to_json()
-                sender_name = sender['first_name'] + " " + sender['last_name']
-                sender_title = sender['portfolio']
-                sender_contact = sender['contact']
-                sender_img_url = sender['img_url']
-                doc = document.to_json()
-                doc['user_info'] = {'name':sender_name, 'title':sender_title, 'contact':sender_contact, 'img_url':sender_img_url}
-                recieved_documents.append(doc)
-#                 senders_info.append()
+#             documents = [ Document.find_by_id(id=elem.document_id) for elem in result ]
+            if documents:
+                for document in documents:
+                    sender = User.find_by_id(document.user_id).to_json()
+                    sender_name = sender['first_name'] + " " + sender['last_name']
+                    sender_title = sender['portfolio']
+                    sender_contact = sender['contact']
+                    sender_img_url = sender['img_url']
+                    doc = document.to_json()
+                    doc['user_info'] = {'name':sender_name, 'title':sender_title, 'contact':sender_contact, 'img_url':sender_img_url}
+                    recieved_documents.append(doc) 
         print("=========================INBOX Documents===============================", recieved_documents)
         return jsonify({'documents': recieved_documents}) 
     
