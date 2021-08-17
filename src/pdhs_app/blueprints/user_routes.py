@@ -41,12 +41,12 @@ def get_user_by_email(email):
     return jsonify(msg="User not found"), 404
 
 
-@bp.route('/update/profile-image/<int:user_id>', methods=['PUT', 'GET'])
+@bp.route('/update/profile-image/<int:user_id>', methods=['PUT', 'GET', 'POST'])
 def update_user_profile_image(user_id):
     """
     Handling the upload of a user profile image.
     """
-    if request.method == 'PUT':
+    if request.method == 'PUT' or 'POST':
         image_file = request.files.get('user_img', None)
         error_msg = None
         if user_id is None:
