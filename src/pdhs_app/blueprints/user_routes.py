@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from src.pdhs_app.models.users.user import User  # src.
 import src.pdhs_app.models.users.errors as UserErrors  # src.
 import src.pdhs_app.models.users.decorators as user_decorators  # src.
