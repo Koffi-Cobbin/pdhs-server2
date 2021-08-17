@@ -47,7 +47,7 @@ def update_user_profile_image(user_id):
     Handling the upload of a user profile image.
     """
     if request.method == 'PUT':
-        image_file = request.files.get('image', None)
+        image_file = request.files.get('user_img', None)
         error_msg = None
         if user_id is None:
             error_msg = 'User ID is required'
@@ -66,7 +66,7 @@ def update_user_profile_image(user_id):
             image_url = upload_blob(
                 image_file.stream, image_filename)
             if image_url is not None:
-                user.profile_image_link = image_url
+                user.img_url = image_url
             else:
                 return jsonify(msg="Error uploading image")
             try:
@@ -88,12 +88,12 @@ def delete_user_profile_image(user_id):
             error_msg = 'Error occured finding user'
             error_code = 404
         if user is not None:
-            image_filename = user.profile_image_link.split('/').pop()
+            image_filename = user.img_url.split('/').pop()
             if not delete_blob(image_filename):
                 error_msg = 'Error occured deleting user from cloud storage'
                 error_code = 500
             else:
-                user.profile_image_link = ''
+                user.img_url = ''
                 user.save_to_db()
         if error_msg is not None:
             return jsonify(msg=error_msg), error_code
