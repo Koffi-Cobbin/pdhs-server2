@@ -17,9 +17,11 @@ def update():
             approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id).first()
         except:
             return jsonify(message=f"Error updating approval")
+        
+        print("===============Approval JSON==============", approval.to_json())
         print("===============Approval==============", approval)
         print("===============Approval ID==============", approval.id)
-        print("===============Approval JSON==============", approval.to_json())
+        
         approval.status = status
         approval.save_to_db()
         return {"message": "Done"}
