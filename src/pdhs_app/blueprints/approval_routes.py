@@ -11,7 +11,7 @@ def update():
     if request.method == 'POST':
         result = request.get_json()
         doc_id = result['doc_id']
-        recipient_id = result['recipient_id']
+        recipient_id = result['user_id']
         status = result['status']
         try:
             approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id)
