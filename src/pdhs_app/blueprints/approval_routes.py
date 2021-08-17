@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from src.pdhs_app.models.users.user import User  # src.
 from src.pdhs_app.models.approvals.approval import Approval
 from src.pdhs_app.models.approvals import errors as ApprovalErrors
+from datetime import datetime
 
 bp = Blueprint('approvals', __name__, url_prefix='/approvals')
 
@@ -16,14 +17,20 @@ def update():
         try:
             approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id).first()
         except:
-            return jsonify(message=f"Error updating approval")
+            return jsonify(message="Error updating approval")
         
-        print("===============Approval JSON==============", approval.to_json())
-        print("===============Approval==============", approval)
-        print("===============Approval ID==============", approval.id)
-        
+        print("===============Before: Approval JSON==============", approval.to_json())
         approval.status = status
+        print("===============After: Approval JSON==============", approval.to_json())
         approval.save_to_db()
+        
+        try:
+            doc = Document.find_by_id(id=doc_id)
+        except:
+            return jsonify(message=f"Error updating document {doc_id}")
+        doc.updated_at = datetime.utcnow()
+        doc.save_to_db()
+        
         return {"message": "Done"}
 
 
