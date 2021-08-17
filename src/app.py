@@ -36,7 +36,7 @@ app.config.from_object('src.config.%s' % env)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['JSON_SORT_KEYS'] = False
 # ensure the instance folder exists
 try:
     os.makedirs(app.instance_path)
