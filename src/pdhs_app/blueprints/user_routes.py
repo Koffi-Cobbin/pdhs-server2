@@ -41,7 +41,7 @@ def get_user_by_email(email):
     return jsonify(msg="User not found"), 404
 
 
-@bp.route('/update/profile-image/<int:user_id>', methods=['PUT'])
+@bp.route('/update/profile-image/<int:user_id>', methods=['PUT', 'GET'])
 def update_user_profile_image(user_id):
     """
     Handling the upload of a user profile image.
@@ -76,6 +76,8 @@ def update_user_profile_image(user_id):
                 return jsonify(msg='Error updating profile'), 500
         else:
             return jsonify(msg="File type not supported"), 500
+    else:
+        return render_template("users/signup.html")
 
 
 @bp.route('/delete/profile-image/<int:user_id>', methods=['DELETE'])
