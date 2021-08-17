@@ -46,7 +46,7 @@ def update_user_profile_image(user_id):
     """
     Handling the upload of a user profile image.
     """
-    if request.method == 'PUT':
+    if request.method == 'POST':
         image_file = request.files.get('user_img', None)
         error_msg = None
         if user_id is None:
