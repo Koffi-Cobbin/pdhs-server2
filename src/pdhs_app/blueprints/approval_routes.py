@@ -10,12 +10,13 @@ bp = Blueprint('approvals', __name__, url_prefix='/approvals')
 def update():
     if request.method == 'POST':
         result = request.get_json()
-        approval_id = request['approval_id']
+        doc_id = result['doc_id']
+        recipient_id = result['recipient_id']
         status = result['status']
         try:
-            approval = Approval.query.filter_by(id=approval_id)
+            approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id)
         except:
-            return jsonify(message=f"Approval with {approval_id} does not exist")
+            return jsonify(message=f"Error updating approval")
         approval.status = status
         approval.save_to_db()
         return {"message": "Done"}
