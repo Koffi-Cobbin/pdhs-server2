@@ -7,7 +7,7 @@ from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.departments.department import Department
 from src.pdhs_app.blueprints.document_routes import inbox as get_new_docs
 from werkzeug.utils import secure_filename
-from storage.cloud_storage import delete_blob, upload_blob
+from src.storage.cloud_storage import delete_blob, upload_blob
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
