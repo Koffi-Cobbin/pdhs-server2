@@ -36,16 +36,20 @@ def update():
         
         if recipient_list:
             i = len(recipient_list)
+            print(">>>>>>>>>>>>>>>>Lenght of recipient list is ", i)
             for recipient in recipient_list:
                     if recipient.status == "approved" and i > 0:
                         i = i - 1
-                        continue
+                        print(">>>>>>>>>>> Was in A when i was ", i)
                     elif recipient.status == "approved" and i == 0:
                         doc.progress = recipient.status
+                        print(">>>>>>>>>>> Was in B when i was ", i)
                     elif recipient.status == "rejected" and i >= 0:
                         doc.progress = recipient.status
+                        print(">>>>>>>>>>> Was in C when i was ", i)
                     else:
                         i = i - 1
+                        print(">>>>>>>>>>> Was in D when i was ", i)
                         continue
                         
         doc.updated_at = datetime.utcnow()
