@@ -89,7 +89,7 @@ def upload():
                 filename = secure_filename(doc_file.filename)
                 new_document.name = filename
                 try:
-                    document_url = upload_blob(doc_file.stream, filename)
+                    document_url = None #upload_blob(doc_file.stream, filename)
                     if document_url is not None:
                         new_document.file = document_url
                 except Exception as e:
