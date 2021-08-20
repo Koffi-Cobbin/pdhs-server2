@@ -140,6 +140,7 @@ def inbox(user_id):
                             documents.append(doc)
                 else:
                     doc = Document.find_by_id(id=approval.document_id) 
+                    doc.progress = approval.status
                     documents.append(doc)
             
 #             documents = [ Document.find_by_id(id=elem.document_id) for elem in result ]
