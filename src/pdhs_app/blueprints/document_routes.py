@@ -4,7 +4,8 @@ from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.approvals.approval import Approval
 from src.pdhs_app.models.portfolios.portfolio import Portfolio
 from werkzeug.utils import secure_filename
-from src.storage.cloud_storage import delete_blob, upload_blob
+# from src.storage.cloud_storage import delete_blob, upload_blob    # This was used for google cloud services
+from src.middleware.cloud_upload import upload_file     # This is being used for cloudinary sevices
 import os, json
 
 bp = Blueprint('documents', __name__, url_prefix='/documents')
@@ -50,7 +51,6 @@ def get_all_docs():
 def upload():
     if request.method == 'POST':
         request_data = request.form.to_dict()
-#         _id = request_data.get('id', None)
         doc_subject = request_data.get('subject', None)
         doc_description = request_data.get('description', None)
         user_id = request_data.get('user_id', None) 
@@ -61,8 +61,6 @@ def upload():
         
         # Handling the creation of a new document object
         error_msg = None
-#         if _id is None:
-#             error_msg = 'Document ID is required'
             
         if doc_subject is None:
             error_msg = 'Document subject is required'
@@ -89,7 +87,7 @@ def upload():
                 filename = secure_filename(doc_file.filename)
                 new_document.name = filename
                 try:
-                    document_url = "https://drive.google.com/file/d/1V8NoGsLtPuyk8E39ThBSTd48Wnz4kliF/view?usp=sharing" #upload_blob(doc_file.stream, filename)
+                    document_url = upload_file(doc_file) #upload_blob(doc_file.stream, filename)
                     if document_url is not None:
                         new_document.file = document_url
                 except Exception as e:
