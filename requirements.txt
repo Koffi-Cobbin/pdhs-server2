@@ -7,6 +7,7 @@ cachetools==4.2.2
 certifi==2021.5.30
 cffi==1.14.6
 charset-normalizer==2.0.3
+cloudinary
 click==8.0.1
 colorama==0.4.4
 Flask==2.0.1
