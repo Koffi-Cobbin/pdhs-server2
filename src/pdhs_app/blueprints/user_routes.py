@@ -49,7 +49,8 @@ def update_user(user_id):
     Handling the upload of a user profile image.
     """
     user = User.find_by_id(user_id)
-    approvals = Approval.query.filter_by(recipient_id=user.id)
+    
+    approvals = Approval.query.filter_by(recipient_id=user_id)
     for approval in approvals:
         if approval:
             approval.delete_from_db()
