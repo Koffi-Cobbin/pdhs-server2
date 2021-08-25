@@ -17,7 +17,7 @@ class User(db.Model):
     portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'), nullable=False)
     college_id = db.Column(db.String(10), db.ForeignKey('college.id'), nullable=True)
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=True)
-    department_id = db.Column(db.String(10), db.ForeignKey('department.id'), nullable=True, default=0)
+    department_id = db.Column(db.String(10), db.ForeignKey('department.id'), nullable=True)
     last_login = db.Column(db.DateTime, nullable=True)
     login_count = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
