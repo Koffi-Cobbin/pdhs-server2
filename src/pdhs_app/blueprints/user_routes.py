@@ -51,7 +51,8 @@ def update_user(user_id):
     user = User.find_by_id(user_id)
     approvals = Approval.query.filter_by(recipient_id=user.id)
     for approval in approvals:
-        approval.delete_from_db()
+        if approval:
+            approval.delete_from_db()
     user.delete_from_db()
     
     if request.method == 'POST':
