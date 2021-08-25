@@ -129,9 +129,12 @@ def inbox(user_id):
                 if approval.status == "pending":
                     recipient_list = Approval.query.filter_by(document_id=approval.document_id)
                     for recipient in recipient_list:
+                        print("================= Recipient Associated with a doc", recipient.recipient_id)
                         if recipient.status == "approved" and recipient.recipient_id != user_id :
                             continue
                         elif recipient.status == "rejected" and recipient.recipient_id != user_id :
+                            break
+                        elif recipient.status == "pending" and recipient.recipient_id != user_id :
                             break
                         elif recipient.status == "pending" and recipient.recipient_id == user_id:
                             doc = Document.find_by_id(id=recipient.document_id) 
