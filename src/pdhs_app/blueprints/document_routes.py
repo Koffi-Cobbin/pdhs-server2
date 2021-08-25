@@ -237,6 +237,7 @@ def delete_document(document_id):
             document = Document.find_by_id(document_id)
         except:
             error_msg = 'Error occured finding document'
+            return jsonify(msg=error_msg), 404
         if document is not None:
             print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ABOUT TO DELETE", document)
             try:
