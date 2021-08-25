@@ -20,13 +20,13 @@ class Document(db.Model):
         return '<Document %r>' % self.name
 
     @classmethod
-    def find_by_file(cls, file):
+    def find_by_user_id(cls, _id):
         """
         Query the table represented by this model
         by the name column.
         :return: A Document object or None
         """
-        return cls.query.filter_by(file=file).first()
+        return cls.query.filter_by(user_id=_id).first()
 
     @classmethod
     def find_by_id(cls, id):
