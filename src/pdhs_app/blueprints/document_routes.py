@@ -204,7 +204,7 @@ def get_user_documents(user_id):
             for approval in doc_approvals:
                 recipient = User.find_by_id(approval.recipient_id)
                 recipient_portfolio = Portfolio.find_by_id(recipient.portfolio_id) 
-                recipients.append(recipient_portfolio.name)
+                recipients.append(recipient_portfolio.name + recipient.department_id)
                 statuses.append(approval.status)
             document.approval_list = dict(zip(recipients, statuses))
             user_documents.append(document.to_json())
