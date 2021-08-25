@@ -133,11 +133,11 @@ def register_user():
                 img_url=user_img_url if user_img_url else None,
                 portfolio_id=portfolio_id
             )
-            if department_id:
+            if department_id is not None:
                 new_user.department_id=department_id
-            if faculty_id:
+            if faculty_id is not None:
                 new_user.faculty_id=faculty_id 
-            if college_id:
+            if college_id is not None:
                 new_user.college_id=college_id 
                 
             try:
