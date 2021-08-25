@@ -36,7 +36,7 @@ def update():
         
         if status == "rejected":
             doc.progress = recipient.status
-        
+            print("====================== Printed Status ===================", doc.to_json())
         
         if recipient_list:
             i = len(recipient_list)
