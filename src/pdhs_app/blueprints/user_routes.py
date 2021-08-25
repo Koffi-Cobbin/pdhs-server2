@@ -9,6 +9,7 @@ from src.pdhs_app.blueprints.document_routes import inbox as get_new_docs
 from werkzeug.utils import secure_filename
 from src.middleware.cloud_upload import upload_file
 # from src.storage.cloud_storage import delete_blob, upload_blob
+from src.pdhs_app.models.approvals.approval import Approval
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
@@ -48,6 +49,8 @@ def update_user(user_id):
     Handling the upload of a user profile image.
     """
     user = User.find_by_id(user_id)
+    approval = Approval.query.filter_by(recipient_id=user.id)
+    approval.delete_from_db()
     user.delete_from_db()
     
     if request.method == 'POST':
