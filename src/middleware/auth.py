@@ -4,7 +4,8 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, get_j
 from src.middleware.security import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-from src.storage.cloud_storage import delete_blob, upload_blob
+from src.middleware.cloud_upload import upload_file
+# from src.storage.cloud_storage import delete_blob, upload_blob
 from src.database import db
 from src.pdhs_app.models.users.user import User
 from .tokens import TokenBlocklist
@@ -107,7 +108,8 @@ def register_user():
         if _allowed_file(user_img.filename):
                 filename = secure_filename(user_img.filename)
                 try:
-                    user_img_url = upload_blob(user_img.stream, filename)
+                    user_img_url = upload_file(user_img)
+#                     upload_blob(user_img.stream, filename)
                 except Exception as e:
                     print('Error uploading file: %s' % e)
         
@@ -150,6 +152,7 @@ def login():
         correct_password = check_password_hash(user.password, password)
         if _id is not None and correct_password:
             user.last_login = datetime.utcnow()
+            user.login_count = user.login_count + 1 if user.login_count else 1
             user.save_to_db()
             access_token = create_access_token(identity=user)
             refresh_token = create_refresh_token(identity=user)
