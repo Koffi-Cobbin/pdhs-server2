@@ -104,7 +104,6 @@ def update_user(user_id):
 
                 try:
                     user.save_to_db()
-                    return jsonify(image=image_url), 200
                 except:
                     return jsonify(msg='Error updating profile'), 500
             else:
