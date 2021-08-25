@@ -17,11 +17,13 @@ def update():
         try:
             approval = Approval.query.filter_by(document_id=doc_id, recipient_id=recipient_id).first()
         except:
+            print("================================= Approval try exited")
             return jsonify(message="Error updating approval")
         
         try:
             doc = Document.find_by_id(id=doc_id)
         except:
+            print("================================= Doc try exited")
             return jsonify(message=f"Error updating document {doc_id}")
         
         if status == "rejected":
@@ -37,7 +39,7 @@ def update():
             recipient_list = Approval.query.filter_by(document_id=doc_id)
         except:
             return jsonify(message=f"Error getting recipients for document {doc_id}")
-        
+
         if recipient_list:
             i = len(recipient_list)
             print(">>>>>>>>>>>>>>>>Lenght of recipient list is ", i)
