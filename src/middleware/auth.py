@@ -93,11 +93,11 @@ def register_user():
         elif not password:
             error = 'Password is required.'
         elif department_id == "None":
-            department_id = None
+            department_id = ""
         elif faculty_id == "None":
-            faculty_id = None
+            faculty_id = ""
         elif college_id == "None":
-            college_id = None
+            college_id = ""
         elif department_id and not (faculty_id and college_id):
             error = 'Faculty and College IDs are required if Dept is provided.'
         elif faculty_id and not college_id:
