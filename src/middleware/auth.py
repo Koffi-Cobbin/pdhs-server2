@@ -131,11 +131,15 @@ def register_user():
                 password=password,
                 contact=contact,
                 img_url=user_img_url if user_img_url else None,
-                portfolio_id=portfolio_id,
-                department_id=department_id if department_id else None,
-                faculty_id=faculty_id if faculty_id else None,
-                college_id=college_id if college_id else None
+                portfolio_id=portfolio_id
             )
+            if department_id:
+                    new_user.department_id=department_id
+            if faculty_id:
+                new_user.faculty_id=faculty_id 
+            if college_id:
+                new_user.college_id=college_id 
+                
             try:
                 new_user.save_to_db()
             except Exception as e:
