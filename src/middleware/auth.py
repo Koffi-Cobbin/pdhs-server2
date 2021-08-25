@@ -93,11 +93,11 @@ def register_user():
         elif not password:
             error = 'Password is required.'
         elif department_id == "None":
-            department_id = ""
+            department_id = None
         elif faculty_id == "None":
-            faculty_id = ""
+            faculty_id = None
         elif college_id == "None":
-            college_id = ""
+            college_id = None
         elif department_id and not (faculty_id and college_id):
             error = 'Faculty and College IDs are required if Dept is provided.'
         elif faculty_id and not college_id:
@@ -132,9 +132,9 @@ def register_user():
                 contact=contact,
                 img_url=user_img_url if user_img_url else None,
                 portfolio_id=portfolio_id,
-                department_id=department_id,
-                faculty_id=faculty_id,
-                college_id=college_id
+                department_id=department_id if department_id else None,
+                faculty_id=faculty_id if faculty_id else None,
+                college_id=college_id if college_id else None
             )
             try:
                 new_user.save_to_db()
