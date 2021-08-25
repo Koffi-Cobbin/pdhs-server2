@@ -134,7 +134,7 @@ def register_user():
                 portfolio_id=portfolio_id
             )
             if department_id:
-                    new_user.department_id=department_id
+                new_user.department_id=department_id
             if faculty_id:
                 new_user.faculty_id=faculty_id 
             if college_id:
