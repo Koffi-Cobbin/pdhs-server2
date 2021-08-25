@@ -8,6 +8,7 @@ from src.pdhs_app.models.faculties.faculty import Faculty
 
 bp = Blueprint('departments', __name__, url_prefix='/departments')
 
+
 @bp.route('/get/<int:college_id>', methods=['GET'])
 def get_college_departments(college_id):
     if request.method == 'GET':
@@ -96,15 +97,15 @@ def create_department():
     return render_template("departments/add_department.html")
 
 
-@bp.route('/update/<int:department_id>', methods=['PUT'])
+@bp.route('/update/<int:department_id>', methods=['GET','POST'])
 def update_department(department_id):
     """
     Update a Department
     """
-    if request.method == 'PUT':
-        department_id = request.json.get('id', None)
-        name = request.json.get('name', None)
-        faculty_id = request.json.get('faculty_id', None)
+    if request.method == 'POST':
+        department_id = request.form['id'] if request.form['id'] else request.json.get('id', None)
+        name = request.form['name'] if request.form['name'] else request.json.get('name', None)
+        faculty_id = request.form['faculty_id'] if request.form['faculty_id'] else request.json.get('faculty_id', None)
 
         if not department_id:
             return jsonify(msg='Id is required.'), 500
@@ -112,6 +113,8 @@ def update_department(department_id):
             try:
                 new_dept = Department.find_by_id(department_id)
                 if new_dept is not None:
+                    if department_id is not None:
+                        new_dept.department_id = department_id
                     if name is not None:
                         new_dept.name = name
                     if faculty_id is not None:
@@ -120,7 +123,7 @@ def update_department(department_id):
             except:
                 return jsonify(msg='Error updating Department'), 500
             return jsonify(new_dept.to_json()), 201
-
+    return render_template("departments/add_department.html")
 
 @bp.route('/delete/<int:department_id>', methods=['DELETE'])
 def delete_department(department_id):
