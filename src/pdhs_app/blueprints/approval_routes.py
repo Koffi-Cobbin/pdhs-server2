@@ -42,8 +42,8 @@ def update():
             return jsonify(message=f"Error getting recipients for document {doc_id}")
 
         if recipient_list:
-            i = len(recipient_list)
-            print(">>>>>>>>>>>>>>>>Lenght of recipient list is ", i)
+            rlist = [j for j in recipient_list]
+            i = len(rlist)
             for recipient in recipient_list:
                     if recipient.status == "approved" and i > 0:
                         i = i - 1
