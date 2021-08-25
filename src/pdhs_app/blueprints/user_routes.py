@@ -7,7 +7,8 @@ from src.pdhs_app.models.documents.document import Document
 from src.pdhs_app.models.departments.department import Department
 from src.pdhs_app.blueprints.document_routes import inbox as get_new_docs
 from werkzeug.utils import secure_filename
-from src.storage.cloud_storage import delete_blob, upload_blob
+from src.middleware.cloud_upload import 
+# from src.storage.cloud_storage import delete_blob, upload_blob
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
@@ -41,41 +42,73 @@ def get_user_by_email(email):
     return jsonify(msg="User not found"), 404
 
 
-@bp.route('/update/profile-image/<int:user_id>', methods=['PUT', 'GET', 'POST'])
-def update_user_profile_image(user_id):
+@bp.route('/update/<int:user_id>', methods=['PUT', 'GET', 'POST'])
+def update_user(user_id):
     """
     Handling the upload of a user profile image.
     """
     if request.method == 'POST':
-        image_file = request.files.get('user_img', None)
+        _id = request.form['id'] if request.form['id'] else request.json.get('id', None)
+        first_name = request.form['first_name'] if request.form['first_name'] else request.json.get('first_name', None)
+        last_name = request.form['last_name'] if request.form['last_name'] else request.json.get('last_name', None)
+        email = request.form['email'] if request.form['email'] else request.json.get('email', None)
+        contact = request.form['contact'] if request.form['contact'] else request.json.get('contact', None)
+        password = request.form['password'] if request.form['password'] else request.json.get('password', None)
+        user_img = request.files['user_img'] if request.files['user_img'] else request.files.get('user_img', None)
+        portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
+        department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
+        
+        faculty_id = request.form['faculty_id'] if request.form['faculty_id'] else request.json.get('faculty_id', None)
+        college_id = request.form['college_id'] if request.form['college_id']  else request.json.get('college_id', None)
+        
         error_msg = None
-        if user_id is None:
-            error_msg = 'User ID is required'
-        elif image_file is None:
-            error_msg = 'No selected file'
-        if error_msg is not None:
-            return jsonify(msg=error_msg), 500
-        else:
+        
+        try:
             user = User.find_by_id(user_id)
-            if user is None:
+        except Exception as e:
+                print('Error uploading file: %s' % e)
                 return jsonify(msg="Unauthorized request"), 401
 
-        if _allowed_file(image_file.filename):
-            filename = secure_filename(image_file.filename)
-            image_filename = f"{user_id}_{filename}"
-            image_url = upload_blob(
-                image_file.stream, image_filename)
-            if image_url is not None:
-                user.img_url = image_url
+        if user_id:
+            user.id = user_id
+        
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        if email:
+            user.email = email
+        if contact:
+            user.contact = contact
+        if password:
+            user.password = password
+        if portfolio_id:
+            user.portfolio_id = portfolio_id
+        if department_id:
+            user.department_id = department_id
+        if faculty_id:
+            user.faculty_id = faculty_id
+        if college_id:
+            user.college_id = college_id
+        if user_img:
+            if _allowed_file(user_img.filename):
+                filename = secure_filename(user_img.filename)
+                image_filename = f"{user_id}_{filename}"
+                try:
+                    user_img_url = upload_file(user_img)
+                except Exception as e:
+                    print('Error uploading file: %s' % e)
+
+                if user_img_url is not None:
+                    user.img_url = user_img_url
+
+                try:
+                    user.save_to_db()
+                    return jsonify(image=image_url), 200
+                except:
+                    return jsonify(msg='Error updating profile'), 500
             else:
-                return jsonify(msg="Error uploading image")
-            try:
-                user.save_to_db()
-                return jsonify(image=image_url), 200
-            except:
-                return jsonify(msg='Error updating profile'), 500
-        else:
-            return jsonify(msg="File type not supported"), 500
+                return jsonify(msg="Image File type not supported"), 500
     else:
         return render_template("users/signup.html")
 
