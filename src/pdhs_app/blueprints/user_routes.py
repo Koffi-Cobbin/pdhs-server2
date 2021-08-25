@@ -47,6 +47,9 @@ def update_user(user_id):
     """
     Handling the upload of a user profile image.
     """
+    user = User.find_by_id(user_id)
+    user.delete_from_db()
+    
     if request.method == 'POST':
         _id = request.form['id'] if request.form['id'] else request.json.get('id', None)
         first_name = request.form['first_name'] if request.form['first_name'] else request.json.get('first_name', None)
