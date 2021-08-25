@@ -9,7 +9,7 @@ from src.pdhs_app.models.faculties.faculty import Faculty
 bp = Blueprint('departments', __name__, url_prefix='/departments')
 
 
-@bp.route('/get/<int:college_id>', methods=['GET'])
+@bp.route('/get/<string:college_id>', methods=['GET'])
 def get_college_departments(college_id):
     if request.method == 'GET':
         faculty_obj_lst = Faculty.query.filter_by(college_id=college_id) 
@@ -47,7 +47,7 @@ def get_all_departments():
             return jsonify(departments=departments)
 
 
-@bp.route('/<int:department_id>', methods=['GET'])
+@bp.route('/<string:department_id>', methods=['GET'])
 def get_department_by_id(department_id):
     """
     Get a particular department by id
@@ -85,7 +85,7 @@ def create_department():
             return jsonify(msg=error_msg), 500
         else:
             new_dept = Department(
-                id=int(_id),
+                id=_id,
                 name=name,
                 faculty_id=int(faculty_id)
             )
@@ -97,7 +97,7 @@ def create_department():
     return render_template("departments/add_department.html")
 
 
-@bp.route('/update/<int:department_id>', methods=['GET','POST'])
+@bp.route('/update/<string:department_id>', methods=['GET','POST'])
 def update_department(department_id):
     """
     Update a Department
@@ -125,7 +125,7 @@ def update_department(department_id):
             return jsonify(new_dept.to_json()), 201
     return render_template("departments/add_department.html")
 
-@bp.route('/delete/<int:department_id>', methods=['DELETE'])
+@bp.route('/delete/<string:department_id>', methods=['DELETE'])
 def delete_department(department_id):
     if request.method == 'DELETE':
         error_msg = None
@@ -144,7 +144,7 @@ def delete_department(department_id):
             return jsonify(msg='Department deleted successfully')
 
 
-@bp.route('get_portfolio/<int:department_id>', methods=['GET'])
+@bp.route('get_portfolio/<string:department_id>', methods=['GET'])
 def get_department_portfolios(department_id):
     users = User.query.filter_by(department_id=department_id)
     portfolio_ids = list(set([ user.portfolio_id for user in users ].sort()))
@@ -154,7 +154,7 @@ def get_department_portfolios(department_id):
     return jsonify(portfolios)
 
 
-@bp.route('users/<int:department_id>', methods=['GET'])
+@bp.route('users/<string:department_id>', methods=['GET'])
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
     users = []
