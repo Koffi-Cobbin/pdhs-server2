@@ -4,7 +4,7 @@ from src.database.db import db
 class Faculty(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    college_id = db.Column(db.Integer, db.ForeignKey('college.id', use_alter=True), nullable=False)
+    college_id = db.Column(db.String(10), db.ForeignKey('college.id', use_alter=True), nullable=False)
     departments = db.relationship('Department', lazy='select', backref=db.backref('faculty', lazy='joined'))
     users = db.relationship("User", lazy='select', backref=db.backref('faculty', lazy='joined'))
 
