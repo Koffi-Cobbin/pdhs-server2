@@ -53,6 +53,12 @@ def update_user(user_id):
     for approval in approvals:
         if approval:
             approval.delete_from_db()
+            
+    docs = Document.find_by_user_id(user_id)
+    for doc in docs:
+        if doc:
+            doc.delete_from_db()
+            
     user.delete_from_db()
     
     if request.method == 'POST':
