@@ -28,7 +28,7 @@ def update():
             return jsonify(message=f"Error updating document {doc_id}")
         
         if status == "rejected":
-            doc.progress = recipient.status
+            doc.progress = status
             print("====================== Printed Status ===================", doc.to_json())
             
         print("===============Before: Approval JSON==============", approval.to_json())
