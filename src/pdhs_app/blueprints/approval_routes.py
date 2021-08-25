@@ -34,6 +34,10 @@ def update():
         except:
             return jsonify(message=f"Error getting recipients for document {doc_id}")
         
+        if status == "rejected":
+            doc.progress = recipient.status
+        
+        
         if recipient_list:
             i = len(recipient_list)
             print(">>>>>>>>>>>>>>>>Lenght of recipient list is ", i)
@@ -44,14 +48,9 @@ def update():
                     elif recipient.status == "approved" and i == 0:
                         doc.progress = recipient.status
                         print(">>>>>>>>>>> Was in B when i was ", i)
-                    elif recipient.status == "rejected" and i >= 0:
-                        doc.progress = recipient.status
-                        print(">>>>>>>>>>> Was in C when i was ", i)
                     else:
-                        i = i - 1
-                        print(">>>>>>>>>>> Was in D when i was ", i)
-                        continue
-                        
+                        break
+                                       
         doc.updated_at = datetime.utcnow()
         doc.save_to_db()
         
