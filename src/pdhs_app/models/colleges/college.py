@@ -2,7 +2,7 @@ from src.database.db import db
 
 
 class College(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(10), primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     faculties = db.relationship("Faculty", lazy='select', backref=db.backref('college', lazy='joined'))
     users = db.relationship("User", lazy='select', backref=db.backref('college', lazy='joined'))
