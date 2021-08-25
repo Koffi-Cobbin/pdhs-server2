@@ -43,7 +43,7 @@ def update():
 
         if recipient_list:
             rlist = [j for j in recipient_list]
-            i = len(rlist)
+            i = len(rlist) - 1
             for recipient in recipient_list:
                     if recipient.status == "approved" and i > 0:
                         i = i - 1
