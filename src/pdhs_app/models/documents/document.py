@@ -26,7 +26,7 @@ class Document(db.Model):
         by the name column.
         :return: A Document object or None
         """
-        return cls.query.filter_by(user_id=_id).first()
+        return cls.query.filter_by(user_id=_id)
 
     @classmethod
     def find_by_id(cls, id):
