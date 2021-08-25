@@ -46,8 +46,8 @@ def update():
             i = len(rlist) - 1
             for recipient in recipient_list:
                     if recipient.status == "approved" and i > 0:
-                        i = i - 1
                         print(">>>>>>>>>>> Was in A when i was ", i)
+                        i = i - 1
                     elif recipient.status == "approved" and i == 0:
                         doc.progress = recipient.status
                         print(">>>>>>>>>>> Was in B when i was ", i)
