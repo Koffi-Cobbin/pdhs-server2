@@ -93,12 +93,13 @@ def update_user(user_id):
         if user_img:
             if _allowed_file(user_img.filename):
                 filename = secure_filename(user_img.filename)
-                image_filename = f"{user_id}_{filename}"
+                
                 try:
                     user_img_url = upload_file(user_img)
                 except Exception as e:
                     print('Error uploading file: %s' % e)
-
+                    return jsonify(msg='Error uploading image'), 500
+                
                 if user_img_url is not None:
                     user.img_url = user_img_url
 
@@ -108,6 +109,7 @@ def update_user(user_id):
                     return jsonify(msg='Error updating profile'), 500
             else:
                 return jsonify(msg="Image File type not supported"), 500
+        return jsonify(msg="User successfully updated")
     else:
         return render_template("users/signup.html")
 
