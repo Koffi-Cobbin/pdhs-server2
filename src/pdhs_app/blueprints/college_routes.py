@@ -36,7 +36,7 @@ def get_all_colleges():
             return jsonify(colleges=colleges)
 
 
-@bp.route('/<int:college_id>', methods=['GET'])
+@bp.route('/<string:college_id>', methods=['GET'])
 def get_college_by_id(college_id):
     """
     Get a particular college by id
@@ -69,7 +69,7 @@ def create_new_college():
         if error_msg is not None:
             return jsonify(msg=error_msg), 500
         else:
-            new_college = College(id=int(_id), name=name)
+            new_college = College(_id, name=name)
             print("==========================================================", new_college.to_json())
             try:
                 new_college.save_to_db() # = College(id=int(_id), name=name, provost_id=provost_id).
@@ -79,7 +79,7 @@ def create_new_college():
     return render_template("colleges/add_college.html")
 
 
-@bp.route('/update/<int:college_id>', methods=['PUT'])
+@bp.route('/update/<string:college_id>', methods=['PUT'])
 def update_college(college_id):
     """
     Update a College
@@ -102,7 +102,7 @@ def update_college(college_id):
             return jsonify(new_college.to_json()), 201
 
 
-@bp.route('/delete/<int:college_id>', methods=['DELETE'])
+@bp.route('/delete/<string:college_id>', methods=['DELETE'])
 def delete_college(college_id):
     if request.method == 'DELETE':
         error_msg = None
