@@ -19,24 +19,24 @@ def update():
         except:
             return jsonify(message="Error updating approval")
         
-        print("===============Before: Approval JSON==============", approval.to_json())
-        approval.status = status
-        print("===============After: Approval JSON==============", approval.to_json())
-        approval.save_to_db()
-        
         try:
             doc = Document.find_by_id(id=doc_id)
         except:
             return jsonify(message=f"Error updating document {doc_id}")
         
+        if status == "rejected":
+            doc.progress = recipient.status
+            print("====================== Printed Status ===================", doc.to_json())
+            
+        print("===============Before: Approval JSON==============", approval.to_json())
+        approval.status = status
+        print("===============After: Approval JSON==============", approval.to_json())
+        approval.save_to_db() 
+        
         try:
             recipient_list = Approval.query.filter_by(document_id=doc_id)
         except:
             return jsonify(message=f"Error getting recipients for document {doc_id}")
-        
-        if status == "rejected":
-            doc.progress = recipient.status
-            print("====================== Printed Status ===================", doc.to_json())
         
         if recipient_list:
             i = len(recipient_list)
