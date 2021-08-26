@@ -158,7 +158,7 @@ def get_department_portfolios(department_id):
 @bp.route('users/<string:department_id>', methods=['GET'])
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
-    others_list = User.query.filter_by(department_id == null())
+    others_list = User.query.filter(department_id == null()).all()
     users = []
     for user in user_obj_lst:
         users.append(user.to_json())
