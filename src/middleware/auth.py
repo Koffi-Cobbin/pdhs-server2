@@ -92,20 +92,24 @@ def register_user():
             error = 'Contact is required.'
         elif not password:
             error = 'Password is required.'
-        elif department_id == "None":
+            
+        if department_id == "None":
             department_id = None
-        elif faculty_id == "None":
+        if faculty_id == "None":
             faculty_id = None
-        elif college_id == "None":
+        if college_id == "None":
             college_id = None
-        elif department_id and not (faculty_id and college_id):
+            
+        if department_id and not (faculty_id and college_id):
             error = 'Faculty and College IDs are required if Dept is provided.'
-        elif faculty_id and not college_id:
+        
+        if faculty_id and not college_id:
             error = 'College ID is required if faculty is provided.'
             
-        elif User.find_by_id(_id) is not None:
+        if User.find_by_id(_id) is not None:
             error = f"The ID {_id} is already registered."
-        elif User.find_by_email(email) is not None:
+            
+        if User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
         
         user_img_url = None
@@ -135,8 +139,10 @@ def register_user():
             )
             if department_id is not None:
                 new_user.department_id=department_id
+                
             if faculty_id is not None:
                 new_user.faculty_id=faculty_id 
+                
             if college_id is not None:
                 new_user.college_id=college_id 
                 
