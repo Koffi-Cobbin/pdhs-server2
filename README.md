@@ -10,6 +10,10 @@ This is also the main stream production environment for the server side of our
 Papperless Document Handling System Application. This codes are from our first 
 repository with a few modifications in the code and the project structure.
 New files were also added as per the production requirements.
+-- Note 
+-- This server side (back-end) of this application is hosted using heroku
+-- Also, the client side (front-end) of this application is also hosted on a different sever
+-- Surge was used as the server to move our client side into production
 
 # Contributors - Name (Index No. - Role)
 
