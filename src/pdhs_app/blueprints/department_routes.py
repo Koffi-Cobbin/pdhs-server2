@@ -4,6 +4,7 @@ from src.pdhs_app.models.departments.department import Department
 from src.pdhs_app.models.portfolios.portfolio import Portfolio
 from src.pdhs_app.models.colleges.college import College
 from src.pdhs_app.models.faculties.faculty import Faculty
+from sqlalchemy import null
 
 
 bp = Blueprint('departments', __name__, url_prefix='/departments')
@@ -157,7 +158,7 @@ def get_department_portfolios(department_id):
 @bp.route('users/<string:department_id>', methods=['GET'])
 def get_department_users(department_id):
     user_obj_lst = User.query.filter_by(department_id=department_id)
-    others_list = User.query.filter(department_id == None)
+    others_list = User.query.filter_by(department_id == null())
     users = []
     for user in user_obj_lst:
         users.append(user.to_json())
