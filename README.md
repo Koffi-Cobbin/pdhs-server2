@@ -6,7 +6,8 @@ handling documents processing in the College of Engineering, KNUST. Specifically
 internal document approvals.
 
 # Main Stream Production
-This is also the main tream production environment. This codes are from our first 
+This is also the main stream production environment for the server side of our 
+Papperless Document Handling System Application. This codes are from our first 
 repository with a few modifications in the code and the project structure.
 New files were also added as per the production requirements.
 
