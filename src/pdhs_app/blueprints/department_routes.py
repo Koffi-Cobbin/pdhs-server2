@@ -158,13 +158,15 @@ def get_department_portfolios(department_id):
 
 @bp.route('users/<string:department_id>', methods=['GET'])
 def get_department_users(department_id):
-    user_obj_lst = User.query.filter_by(department_id=department_id)
-    others_list = User.query.filter(User.department_id.is_(None))
     users = []
-    for user in user_obj_lst:
-        users.append(user.to_json())
-        
-    for other in others_list:
-        users.append(other.to_json())
-        
+    
+    if department_id == "others":
+        others_list = User.query.filter(User.department_id.is_(None))
+        for other in others_list:
+            users.append(other.to_json())
+    else:
+        user_obj_lst = User.query.filter_by(department_id=department_id)
+        for user in user_obj_lst:
+            users.append(user.to_json())
+
     return jsonify(department_users=users)
