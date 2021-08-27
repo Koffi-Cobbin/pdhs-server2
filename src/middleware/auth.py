@@ -169,9 +169,14 @@ def login():
             user.last_login = datetime.utcnow()
             user.login_count = user.login_count + 1 if user.login_count else 1
             user.save_to_db()
+            
+            logged_in_user = user.to_json()
+            if user.department_id is None:
+                logged_in_user['department_id'] = "others"
+                
             access_token = create_access_token(identity=user)
             refresh_token = create_refresh_token(identity=user)
-            return jsonify(access_token=access_token, refresh_token=refresh_token, user=user.to_json()), 200
+            return jsonify(access_token=access_token, refresh_token=refresh_token, user=logged_in_user), 200
         else:
             return jsonify(msg='Invalid ID or password'), 401
     else:
