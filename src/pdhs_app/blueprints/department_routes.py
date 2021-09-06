@@ -56,10 +56,18 @@ def get_department_by_id(department_id):
     """
     if request.method == 'GET':
         error_msg = None
-        try:
-            department = Department.find_by_id(department_id)
-        except:
-            error_msg = f'No department with ID {department_id} found'
+        department = None
+        if department_id == "others":
+            try:
+                department = Department.find_by_id(department_id)
+            except:
+                error_msg = "No department not found"
+        else:
+            try:
+                department = Department.find_by_id(department_id)
+            except:
+                error_msg = f'No department with ID {department_id} found'
+                
         if error_msg is not None:
             return jsonify(msg=error_msg), 404
         elif department is not None:
@@ -164,7 +172,7 @@ def get_department_users(department_id):
         others_list = User.query.filter(User.department_id.is_(None))
         for other in others_list:
             new = other.to_json()
-            new['department_id'] = " "
+            new['department_id'] = "others"
             users.append(new)
     else:
         user_obj_lst = User.query.filter_by(department_id=department_id)
