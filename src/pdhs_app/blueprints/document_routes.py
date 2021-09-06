@@ -207,7 +207,7 @@ def get_user_documents(user_id):
             for approval in doc_approvals:
                 recipient = User.find_by_id(approval.recipient_id)
                 recipient_portfolio = Portfolio.find_by_id(recipient.portfolio_id) 
-                department_id = recipient.department_id if recipient.department_id else "others"
+                department_id = recipient.department_id if recipient.department_id else " "
                 recipients.append(recipient_portfolio.name + " (" + department_id + ")")
                 statuses.append(approval.status)
             document.approval_list = dict(zip(recipients, statuses))
