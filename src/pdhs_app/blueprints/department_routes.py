@@ -164,7 +164,7 @@ def get_department_users(department_id):
         others_list = User.query.filter(User.department_id.is_(None))
         for other in others_list:
             new = other.to_json()
-            new['department_id'] = "others"
+            new['department_id'] = " "
             users.append(new)
     else:
         user_obj_lst = User.query.filter_by(department_id=department_id)
