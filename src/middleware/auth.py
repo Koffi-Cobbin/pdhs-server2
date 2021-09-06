@@ -113,7 +113,8 @@ def register_user():
         
         user_img_url = None
         
-        if _allowed_file(user_img.filename):
+        if user_img:
+            if _allowed_file(user_img.filename):
                 filename = secure_filename(user_img.filename)
                 try:
                     user_img_url = upload_file(user_img)
