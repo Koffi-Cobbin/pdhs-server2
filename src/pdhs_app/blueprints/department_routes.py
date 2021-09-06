@@ -25,6 +25,14 @@ def get_college_departments(college_id):
                 departments.append(lst_obj.to_json())
         return jsonify(departments=departments)
 
+    
+@bp.route('/faculty/<string:faculty_id>', methods=['GET'])
+def get_faculty_departments(faculty_id):
+    result = Department.query.filter_by(faculty_id=faculty_id)
+    department_json_lst = [department.to_json() for department in result]
+    return jsonify(departments=department_json_lst)
+    
+    
 @bp.route('/', methods=['GET'])
 def get_all_departments():
     """
