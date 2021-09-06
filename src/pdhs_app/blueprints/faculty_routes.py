@@ -5,7 +5,7 @@ from src.pdhs_app.models.faculties.faculty import Faculty
 bp = Blueprint('faculties', __name__, url_prefix='/faculties')
 
 
-@bp.route('/college/<String:college_id>', methods=['GET'])
+@bp.route('/college/<string:college_id>', methods=['GET'])
 def college_faculties(college_id):
     faculties = Faculty.query.all()
     college_faculties =  []
