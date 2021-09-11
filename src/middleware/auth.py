@@ -63,17 +63,18 @@ def check_if_token_revoked(jwt_header, jwt_payload):
 @bp.route('/signup', methods=['POST', 'GET'])
 def register_user():
     if request.method == 'POST':
-        _id = request.json.get('id', None)                              # request.form['id'] if request.form['id'] else 
-        first_name = request.json.get('first_name', None)               # request.form['first_name'] if request.form['first_name'] else 
-        last_name = request.json.get('last_name', None)                 # request.form['last_name'] if request.form['last_name'] else 
-        email = request.json.get('email', None)                         # request.form['email'] if request.form['email'] else 
-        contact = request.json.get('contact', None)                     # request.form['contact'] if request.form['contact'] else 
-        password = request.json.get('password', None)                   # request.form['password'] if request.form['password'] else 
+        request_data = request.form.to_dict()
+        _id = request_data.get('id', None)                              # request.form['id'] if request.form['id'] else 
+        first_name = request_data.get('first_name', None)               # request.form['first_name'] if request.form['first_name'] else 
+        last_name = request_data.get('last_name', None)                 # request.form['last_name'] if request.form['last_name'] else 
+        email = request_data.get('email', None)                         # request.form['email'] if request.form['email'] else 
+        contact = request_data.get('contact', None)                     # request.form['contact'] if request.form['contact'] else 
+        password = request_data.get('password', None)                   # request.form['password'] if request.form['password'] else 
         user_img = request.files.get('user_img', None)                  # request.files['user_img'] if request.files['user_img'] else 
-        portfolio_id = request.json.get('portfolio_id', None)           # request.form['portfolio_id'] if request.form['portfolio_id'] else 
-        department_id = request.json.get('department_id', None)         # request.form['department_id'] if request.form['department_id'] else 
-        faculty_id = request.json.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
-        college_id = request.json.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
+        portfolio_id = request_data.get('portfolio_id', None)           # request.form['portfolio_id'] if request.form['portfolio_id'] else 
+        department_id = request_data.get('department_id', None)         # request.form['department_id'] if request.form['department_id'] else 
+        faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
+        college_id = request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
 
         error = None
 
