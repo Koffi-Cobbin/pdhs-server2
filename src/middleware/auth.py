@@ -80,6 +80,8 @@ def register_user():
 
         error = None
         
+        print("PROFILE PICTURE", user_img)
+        
 #         try:
 #             faculty_id = Department.find_by_id(department_id).faculty_id
 #         except:
@@ -158,11 +160,12 @@ def register_user():
                 new_user.college_id=college_id 
                 
             try:
-                new_user.save_to_db()
+                #new_user.save_to_db()
+                print(" YOU HAVE TO SAVE THE USER!!! ")
             except Exception as e:
                 print("Error saving user to database: ..............................\n", e)
                 return jsonify(msg="Could not save new user to database"), 500
-            return jsonify({'msg': 'User created successfully'}), 201
+            return jsonify({'msg': 'User created successfully'})
     return render_template("users/signup.html")
 
 
