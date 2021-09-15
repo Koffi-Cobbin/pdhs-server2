@@ -80,12 +80,7 @@ def register_user():
 
         error = None
         
-        print("PROFILE PICTURE", user_img)
-        
-#         try:
-#             faculty_id = Department.find_by_id(department_id).faculty_id
-#         except:
-#             error = "Faculty Not Found"
+        print("ALL DATA RECIEVED" + _id + "<<<>>>" + first_name + "<<<>>>" + department_id + "<<<>>>" + faculty_id + "<<<>>>" + college_id + "<<<>>>")
 
         if not email:
             error = 'Email is required.'
