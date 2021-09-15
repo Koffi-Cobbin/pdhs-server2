@@ -139,20 +139,20 @@ def register_user():
         else:
             password = generate_password_hash(password)
             new_user = User(
-                id=_id,
+                id=int(_id),
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
                 password=password,
                 contact=contact,
                 img_url=user_img_url if user_img_url else None,
-                portfolio_id=portfolio_id
+                portfolio_id=int(portfolio_id)
             )
             if department_id is not None:
                 new_user.department_id=department_id
                 
             if faculty_id is not None:
-                new_user.faculty_id=faculty_id 
+                new_user.faculty_id=int(faculty_id )
                 
             if college_id is not None:
                 new_user.college_id=college_id 
