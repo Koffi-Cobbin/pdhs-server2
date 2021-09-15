@@ -74,7 +74,7 @@ def register_user():
         portfolio_id = request_data.get('portfolio_id', None)           # request.form['portfolio_id'] if request.form['portfolio_id'] else 
         department_id = request_data.get('department_id', None)         # request.form['department_id'] if request.form['department_id'] else 
         faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
-        college_id = request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
+        college_id = "COE" #request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
 
         error = None
 
