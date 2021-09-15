@@ -5,11 +5,14 @@ from src.pdhs_app.models.faculties.faculty import Faculty
 bp = Blueprint('faculties', __name__, url_prefix='/faculties')
 
 
-@bp.route('/', methods=['GET'])
-def all():
+@bp.route('/college/<string:college_id>', methods=['GET'])
+def college_faculties(college_id):
     faculties = Faculty.query.all()
-    result = [faculty.to_json() for faculty in faculties]
-    return jsonify(result)
+    college_faculties =  []
+    for faculty in faculties:
+        if faculty.college_id == college_id:
+            college_faculties.append(faculty.to_json())
+    return jsonify(college_faculties)
 
 
 @bp.route('/new', methods=['GET', 'POST'])

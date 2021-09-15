@@ -25,6 +25,14 @@ def get_college_departments(college_id):
                 departments.append(lst_obj.to_json())
         return jsonify(departments=departments)
 
+    
+@bp.route('/faculty/<int:faculty_id>', methods=['GET'])
+def get_faculty_departments(faculty_id):
+    result = Department.query.filter_by(faculty_id=faculty_id)
+    department_json_lst = [department.to_json() for department in result]
+    return jsonify(departments=department_json_lst)
+    
+    
 @bp.route('/', methods=['GET'])
 def get_all_departments():
     """
@@ -56,10 +64,18 @@ def get_department_by_id(department_id):
     """
     if request.method == 'GET':
         error_msg = None
-        try:
-            department = Department.find_by_id(department_id)
-        except:
-            error_msg = f'No department with ID {department_id} found'
+        department = None
+        if department_id == "others":
+            try:
+                department = Department.find_by_id(department_id)
+            except:
+                error_msg = "No department not found"
+        else:
+            try:
+                department = Department.find_by_id(department_id)
+            except:
+                error_msg = f'No department with ID {department_id} found'
+                
         if error_msg is not None:
             return jsonify(msg=error_msg), 404
         elif department is not None:
