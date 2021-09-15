@@ -120,6 +120,7 @@ def register_user():
                 try:
                     user_img_url = upload_file(user_img)
 #                     upload_blob(user_img.stream, filename)
+                    print('IMAGE URL..............', user_img_url)
                 except Exception as e:
                     print('Error uploading file: %s' % e)
         
