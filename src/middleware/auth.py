@@ -8,6 +8,8 @@ from src.middleware.cloud_upload import upload_file
 # from src.storage.cloud_storage import delete_blob, upload_blob
 from src.database import db
 from src.pdhs_app.models.users.user import User
+from src.pdhs_app.models.faculties.faculty import Faculty
+from src.pdhs_app.models.departments.department import Department
 from .tokens import TokenBlocklist
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -74,9 +76,11 @@ def register_user():
         portfolio_id = request_data.get('portfolio_id', None)           # request.form['portfolio_id'] if request.form['portfolio_id'] else 
         department_id = request_data.get('department_id', None)         # request.form['department_id'] if request.form['department_id'] else 
         faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
-        college_id = "COE" #request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
+        college_id = "COE" # request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
 
         error = None
+        
+        print("ALL DATA RECIEVED" + _id + "<<<>>>" + first_name + "<<<>>>" + department_id + "<<<>>>" + faculty_id + "<<<>>>" + college_id + "<<<>>>")
 
         if not email:
             error = 'Email is required.'
@@ -95,8 +99,10 @@ def register_user():
             
         if department_id == "None":
             department_id = None
+            
         if faculty_id == "None":
             faculty_id = None
+        
         if college_id == "None":
             college_id = None
             
@@ -111,6 +117,7 @@ def register_user():
             
         if User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
+            
         
         user_img_url = None
         
@@ -118,8 +125,7 @@ def register_user():
             if _allowed_file(user_img.filename):
                 filename = secure_filename(user_img.filename)
                 try:
-                    user_img_url = upload_file(user_img)
-#                     upload_blob(user_img.stream, filename)
+                    user_img_url = upload_file(user_img)            # upload_blob(user_img.stream, filename)
                     print('IMAGE URL..............', user_img_url)
                 except Exception as e:
                     print('Error uploading file: %s' % e)
@@ -130,30 +136,31 @@ def register_user():
         else:
             password = generate_password_hash(password)
             new_user = User(
-                id=_id,
+                id=int(_id),
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
                 password=password,
                 contact=contact,
                 img_url=user_img_url if user_img_url else None,
-                portfolio_id=portfolio_id
+                portfolio_id=int(portfolio_id)
             )
             if department_id is not None:
                 new_user.department_id=department_id
                 
             if faculty_id is not None:
-                new_user.faculty_id=faculty_id 
+                new_user.faculty_id=int(faculty_id )
                 
             if college_id is not None:
                 new_user.college_id=college_id 
                 
             try:
-                new_user.save_to_db()
+                #new_user.save_to_db()
+                print(" YOU HAVE TO SAVE THE USER!!! ")
             except Exception as e:
                 print("Error saving user to database: ..............................\n", e)
                 return jsonify(msg="Could not save new user to database"), 500
-            return jsonify({'msg': 'User created successfully'}), 201
+            return jsonify({'msg': 'User created successfully'})
     return render_template("users/signup.html")
 
 
