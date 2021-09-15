@@ -75,10 +75,15 @@ def register_user():
         user_img = request.files.get('user_img', None)                  # request.files['user_img'] if request.files['user_img'] else 
         portfolio_id = request_data.get('portfolio_id', None)           # request.form['portfolio_id'] if request.form['portfolio_id'] else 
         department_id = request_data.get('department_id', None)         # request.form['department_id'] if request.form['department_id'] else 
-       #faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
+        faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
         college_id = "COE" # request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
 
         error = None
+        
+#         try:
+#             faculty_id = Department.find_by_id(department_id).faculty_id
+#         except:
+#             error = "Faculty Not Found"
 
         if not email:
             error = 'Email is required.'
@@ -97,6 +102,9 @@ def register_user():
             
         if department_id == "None":
             department_id = None
+            
+        if faculty_id == "None":
+            faculty_id = None
         
         if college_id == "None":
             college_id = None
@@ -113,10 +121,6 @@ def register_user():
         if User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
             
-        try:
-            faculty_id = Department.find_by_id(department_id).faculty_id
-        except:
-            error = "Faculty Not Found"
         
         user_img_url = None
         
