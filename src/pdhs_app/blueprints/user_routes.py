@@ -172,9 +172,9 @@ def get_all_users():
         return jsonify({'users': users})
 
 
-@bp.route('delete/<int:user_id>', methods=['DELETE'])
+@bp.route('delete/<int:user_id>', methods=['POST'])
 def delete_user(user_id):
-    if request.method == 'DELETE':
+    if request.method == 'POST':
         user = User.find_by_id(user_id)
     if user is not None:
         try:
