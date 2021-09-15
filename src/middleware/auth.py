@@ -8,6 +8,8 @@ from src.middleware.cloud_upload import upload_file
 # from src.storage.cloud_storage import delete_blob, upload_blob
 from src.database import db
 from src.pdhs_app.models.users.user import User
+from src.pdhs_app.models.faculties.faculty import Faculty
+from src.pdhs_app.models.departments.department import Department
 from .tokens import TokenBlocklist
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -73,8 +75,8 @@ def register_user():
         user_img = request.files.get('user_img', None)                  # request.files['user_img'] if request.files['user_img'] else 
         portfolio_id = request_data.get('portfolio_id', None)           # request.form['portfolio_id'] if request.form['portfolio_id'] else 
         department_id = request_data.get('department_id', None)         # request.form['department_id'] if request.form['department_id'] else 
-        faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
-        college_id = "COE" #request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
+       #faculty_id = request_data.get('faculty_id', None)               # request.form['faculty_id'] if request.form['faculty_id'] else 
+        college_id = "COE" # request_data.get('college_id', None)               # request.form['college_id'] if request.form['college_id']  else 
 
         error = None
 
@@ -95,8 +97,7 @@ def register_user():
             
         if department_id == "None":
             department_id = None
-        if faculty_id == "None":
-            faculty_id = None
+        
         if college_id == "None":
             college_id = None
             
@@ -111,6 +112,11 @@ def register_user():
             
         if User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
+            
+        try:
+            faculty_id = Department.find_by_id(department_id).faculty_id
+        except:
+            error = "Faculty Not Found"
         
         user_img_url = None
         
@@ -118,8 +124,7 @@ def register_user():
             if _allowed_file(user_img.filename):
                 filename = secure_filename(user_img.filename)
                 try:
-                    user_img_url = upload_file(user_img)
-#                     upload_blob(user_img.stream, filename)
+                    user_img_url = upload_file(user_img)            # upload_blob(user_img.stream, filename)
                     print('IMAGE URL..............', user_img_url)
                 except Exception as e:
                     print('Error uploading file: %s' % e)
