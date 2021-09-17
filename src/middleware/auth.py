@@ -155,7 +155,7 @@ def register_user():
                 new_user.college_id=college_id 
                 
             try:
-                #new_user.save_to_db()
+                new_user.save_to_db()
                 print(" YOU HAVE TO SAVE THE USER!!! ")
             except Exception as e:
                 print("Error saving user to database: ..............................\n", e)
