@@ -43,51 +43,31 @@ def get_user_by_email(email):
     return jsonify(msg="User not found"), 404
 
 
-@bp.route('/update/<int:user_id>', methods=['PUT', 'GET', 'POST'])
+@bp.route('/update/<int:user_id>', methods=['POST'])
 def update_user(user_id):
-    """
-    Handling the upload of a user profile image.
-    """
-#     user = User.find_by_id(user_id)
-    
-#     approvals = Approval.query.filter_by(recipient_id=user_id)
-#     if approvals:
-#         for approval in approvals:
-#             if approval:
-#                 approval.delete_from_db()
-            
-#    docs = Document.find_by_user_id(user_id)
-#     for doc in docs:
-#         if doc:
-#             doc.delete_from_db()
-            
-#     user.delete_from_db()
-    
     if request.method == 'POST':
-        _id = request.form['id'] if request.form['id'] else request.json.get('id', None)
-        first_name = request.form['first_name'] if request.form['first_name'] else request.json.get('first_name', None)
-        last_name = request.form['last_name'] if request.form['last_name'] else request.json.get('last_name', None)
-        email = request.form['email'] if request.form['email'] else request.json.get('email', None)
-        contact = request.form['contact'] if request.form['contact'] else request.json.get('contact', None)
-        password = request.form['password'] if request.form['password'] else request.json.get('password', None)
-        user_img = request.files['user_img'] if request.files['user_img'] else request.files.get('user_img', None)
-        portfolio_id = request.form['portfolio_id'] if request.form['portfolio_id'] else request.json.get('portfolio_id', None)
-        department_id = request.form['department_id'] if request.form['department_id'] else request.json.get('department_id', None)
-        
-        faculty_id = request.form['faculty_id'] if request.form['faculty_id'] else request.json.get('faculty_id', None)
-        college_id = request.form['college_id'] if request.form['college_id']  else request.json.get('college_id', None)
+        user_id = request.json.get('id', None)                  #   request.form['id'] if request.form['id'] else 
+        first_name = request.json.get('first_name', None)   #   request.form['first_name'] if request.form['first_name'] else 
+        last_name = request.json.get('last_name', None)     #   request.form['last_name'] if request.form['last_name'] else 
+        email = request.json.get('email', None)             #   request.form['email'] if request.form['email'] else 
+        contact = request.json.get('contact', None)         #   request.form['contact'] if request.form['contact'] else 
+        password = request.json.get('password', None)       #   request.form['password'] if request.form['password'] else 
+        user_img = request.files.get('user_img', None)      #   request.files['user_img'] if request.files['user_img'] else 
+        portfolio_id = request.json.get('portfolio_id', None)   #   request.form['portfolio_id'] if request.form['portfolio_id'] else 
+        department_id = request.json.get('department_id', None) #   request.form['department_id'] if request.form['department_id'] else 
+        faculty_id = request.json.get('faculty_id', None)   #   request.form['faculty_id'] if request.form['faculty_id'] else 
+        college_id = request.json.get('college_id', None)   #   request.form['college_id'] if request.form['college_id']  else 
         
         error_msg = None
         
         try:
             user = User.find_by_id(user_id)
         except Exception as e:
-                print('Error uploading file: %s' % e)
+                print('Error finding user: %s' % e)
                 return jsonify(msg="Unauthorized request"), 401
 
         if user_id:
             user.id = user_id
-        
         if first_name:
             user.first_name = first_name
         if last_name:
@@ -126,31 +106,8 @@ def update_user(user_id):
             else:
                 return jsonify(msg="Image File type not supported"), 500
         return jsonify(msg="User successfully updated")
-    else:
-        return render_template("users/signup.html")
-
-
-@bp.route('/delete/profile-image/<int:user_id>', methods=['DELETE'])
-def delete_user_profile_image(user_id):
-    if request.method == 'DELETE':
-        error_msg = None
-        try:
-            user = User.find_by_id(user_id)
-        except:
-            error_msg = 'Error occured finding user'
-            error_code = 404
-        if user is not None:
-            image_filename = user.img_url.split('/').pop()
-            if not delete_blob(image_filename):
-                error_msg = 'Error occured deleting user from cloud storage'
-                error_code = 500
-            else:
-                user.img_url = ''
-                user.save_to_db()
-        if error_msg is not None:
-            return jsonify(msg=error_msg), error_code
-        else:
-            return jsonify(msg='Profile Image deleted successfully'), 200
+#     else:
+#         return render_template("users/signup.html")
 
 
 @bp.route('/', methods=['GET'])
