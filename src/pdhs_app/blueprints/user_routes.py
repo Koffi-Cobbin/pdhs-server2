@@ -175,11 +175,14 @@ def get_all_users():
 @bp.route('delete/<int:user_id>', methods=['POST'])
 def delete_user(user_id):
     if request.method == 'POST':
-        user = User.find_by_id(user_id)
-    if user is not None:
         try:
-            user.delete_from_db()
+            user = User.find_by_id(user_id)
         except:
-            return jsonify(msg="Error deleting user."), 500
-
-    return jsonify(msg="User not found"), 404
+            return jsonify(msg="User not found"), 404
+        
+        if user is not None:
+            try:
+                user.delete_from_db()
+            except:
+                return jsonify(msg="Error deleting user."), 500
+    return jsonify(msg="User deleted successfully!"), 200
