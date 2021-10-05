@@ -43,8 +43,8 @@ def get_user_by_email(email):
     return jsonify(msg="User not found"), 404
 
 
-@bp.route('/update/<int:user_id>', methods=['POST'])
-def update_user(user_id):
+@bp.route('/update/<int:_id>', methods=['POST'])
+def update_user(_id):
     if request.method == 'POST':
         user_id = request.json.get('id', None)                  #   request.form['id'] if request.form['id'] else 
         first_name = request.json.get('first_name', None)   #   request.form['first_name'] if request.form['first_name'] else 
@@ -61,7 +61,9 @@ def update_user(user_id):
         error_msg = None
  
         try:
-            user = User.find_by_id(user_id)
+            user = User.find_by_id(_id)
+            if user:
+                print('>>>>>>>>>>>>>>>>>>>>: %s' % user.to_json())
         except Exception as e:
                 print('Error finding user: %s' % e)
                 return jsonify(msg="Unauthorized request"), 401
