@@ -62,11 +62,10 @@ def update_user(user_id):
         user = None
         try:
             user = User.find_by_id(user_id)
-            print('>>>>>>>>>>>>>>>>>>>>: %s' % user.to_json())
         except Exception as e:
                 print('Error finding user: %s' % e)
                 return jsonify(msg="Unauthorized request"), 401
-
+        print('>>>>>>>>>>>>>>>>>>>>: %s' % user.to_json())
         if user_id:
             user.id = user_id
         if first_name:
