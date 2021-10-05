@@ -98,13 +98,13 @@ def update_user(user_id):
                 
                 if user_img_url is not None:
                     user.img_url = user_img_url
-
-                try:
-                    user.save_to_db()
-                except:
-                    return jsonify(msg='Error updating profile'), 500
             else:
                 return jsonify(msg="Image File type not supported"), 500
+
+        try:
+            user.save_to_db()
+        except:
+            return jsonify(msg='Error updating profile'), 500
         return jsonify(msg="User successfully updated")
 #     else:
 #         return render_template("users/signup.html")
