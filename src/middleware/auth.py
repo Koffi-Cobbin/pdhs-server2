@@ -117,7 +117,16 @@ def register_user():
             
         if User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
+           
+        try:
+            registrar = User.find_by_id(registrars_id) 
+        except:
+            error = f"Unathorized Access."
             
+        if registrar:
+            if registrar.portfolio_id == portfolio_id:
+                registrar.portfolio_id = None
+                registrar.save_to_db()
         
         user_img_url = None
         
