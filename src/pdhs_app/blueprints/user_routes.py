@@ -72,8 +72,8 @@ def update_user(user_id):
             user.first_name = first_name
         if last_name:
             user.last_name = last_name
-#         if email:
-#             user.email = email
+        if email:
+            user.email = email
         if contact:
             user.contact = contact
         if password:
