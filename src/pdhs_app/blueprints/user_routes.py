@@ -59,7 +59,7 @@ def update_user(user_id):
         college_id = request.json.get('college_id', None)   #   request.form['college_id'] if request.form['college_id']  else 
         
         error_msg = None
-        user = None
+ 
         try:
             user = User.find_by_id(user_id)
         except Exception as e:
