@@ -117,7 +117,16 @@ def register_user():
             
         if User.find_by_email(email) is not None:
             error = f"The email address {email} is already registered."
+           
+#         try:
+#             registrar = User.find_by_id(registrars_id) 
+#         except:
+#             error = f"Unathorized Access."
             
+#         if registrar:
+#             if registrar.portfolio_id == portfolio_id:
+#                 registrar.portfolio_id = None
+#                 registrar.save_to_db()
         
         user_img_url = None
         
@@ -155,7 +164,7 @@ def register_user():
                 new_user.college_id=college_id 
                 
             try:
-                #new_user.save_to_db()
+                new_user.save_to_db()
                 print(" YOU HAVE TO SAVE THE USER!!! ")
             except Exception as e:
                 print("Error saving user to database: ..............................\n", e)
